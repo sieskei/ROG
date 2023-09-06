@@ -162,9 +162,9 @@
 				7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */,
 				7171A17C2AA908DD000AA425 /* ContentView.swift */,
 				7171A18B2AA90975000AA425 /* ExtensionManger.swift */,
+				7171A1802AA908DE000AA425 /* Preview Content */,
 				7171A17E2AA908DE000AA425 /* Assets.xcassets */,
 				7171A1832AA908DE000AA425 /* HID_Installer.entitlements */,
-				7171A1802AA908DE000AA425 /* Preview Content */,
 			);
 			path = "HID-Installer";
 			sourceTree = "<group>";
@@ -227,13 +227,13 @@
 		71E93AFE2AA9176B003DBB97 /* Gadget */ = {
 			isa = PBXGroup;
 			children = (
+				71E93B0C2AA91B2C003DBB97 /* main.swift */,
 				71E93AFF2AA9176B003DBB97 /* AppDelegate.swift */,
 				71E93B012AA9176B003DBB97 /* ViewController.swift */,
 				71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */,
+				71E93B102AA91F59003DBB97 /* WMI.swift */,
 				71E93B032AA9176C003DBB97 /* Assets.xcassets */,
 				71E93B082AA9176C003DBB97 /* Gadget.entitlements */,
-				71E93B0C2AA91B2C003DBB97 /* main.swift */,
-				71E93B102AA91F59003DBB97 /* WMI.swift */,
 			);
 			path = Gadget;
 			sourceTree = "<group>";
