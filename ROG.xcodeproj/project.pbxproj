@@ -6,14 +6,114 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		71BEABBC2AA8C686002F34CB /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71BEABBB2AA8C67C002F34CB /* libkmod.a */; };
+		71BEABBF2AA8CEF8002F34CB /* WMI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABBD2AA8CEF8002F34CB /* WMI.cpp */; };
+		71BEABC02AA8CEF8002F34CB /* WMI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71BEABBE2AA8CEF8002F34CB /* WMI.hpp */; };
+		71BEABC32AA8CF14002F34CB /* KeyImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABC12AA8CF14002F34CB /* KeyImplementations.cpp */; };
+		71BEABC42AA8CF14002F34CB /* KeyImplementations.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71BEABC22AA8CF14002F34CB /* KeyImplementations.hpp */; };
+		71BEABC72AA8CF32002F34CB /* WMIUC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABC52AA8CF32002F34CB /* WMIUC.cpp */; };
+		71BEABC82AA8CF32002F34CB /* WMIUC.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71BEABC62AA8CF32002F34CB /* WMIUC.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		71BEABB22AA8C268002F34CB /* WMI.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMI.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		71BEABB62AA8C268002F34CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		71BEABBB2AA8C67C002F34CB /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = usr/lib/libkmod.a; sourceTree = SDKROOT; };
+		71BEABBD2AA8CEF8002F34CB /* WMI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WMI.cpp; sourceTree = "<group>"; };
+		71BEABBE2AA8CEF8002F34CB /* WMI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WMI.hpp; sourceTree = "<group>"; };
+		71BEABC12AA8CF14002F34CB /* KeyImplementations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyImplementations.cpp; sourceTree = "<group>"; };
+		71BEABC22AA8CF14002F34CB /* KeyImplementations.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyImplementations.hpp; sourceTree = "<group>"; };
+		71BEABC52AA8CF32002F34CB /* WMIUC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WMIUC.cpp; sourceTree = "<group>"; };
+		71BEABC62AA8CF32002F34CB /* WMIUC.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WMIUC.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		71BEABAF2AA8C268002F34CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71BEABBC2AA8C686002F34CB /* libkmod.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		71BEABB32AA8C268002F34CB /* WMI */ = {
+			isa = PBXGroup;
+			children = (
+				71BEABB62AA8C268002F34CB /* Info.plist */,
+				71BEABBD2AA8CEF8002F34CB /* WMI.cpp */,
+				71BEABBE2AA8CEF8002F34CB /* WMI.hpp */,
+				71BEABC12AA8CF14002F34CB /* KeyImplementations.cpp */,
+				71BEABC22AA8CF14002F34CB /* KeyImplementations.hpp */,
+				71BEABC52AA8CF32002F34CB /* WMIUC.cpp */,
+				71BEABC62AA8CF32002F34CB /* WMIUC.hpp */,
+			);
+			path = WMI;
+			sourceTree = "<group>";
+		};
+		71BEABBA2AA8C67C002F34CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71BEABBB2AA8C67C002F34CB /* libkmod.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		71D68FFE2AA7D01A00DEA696 = {
 			isa = PBXGroup;
 			children = (
+				71BEABB32AA8C268002F34CB /* WMI */,
+				71D6900B2AA7D22B00DEA696 /* Products */,
+				71BEABBA2AA8C67C002F34CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
+		71D6900B2AA7D22B00DEA696 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71BEABB22AA8C268002F34CB /* WMI.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		71BEABAD2AA8C268002F34CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71BEABC82AA8CF32002F34CB /* WMIUC.hpp in Headers */,
+				71BEABC42AA8CF14002F34CB /* KeyImplementations.hpp in Headers */,
+				71BEABC02AA8CEF8002F34CB /* WMI.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		71BEABB12AA8C268002F34CB /* WMI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71BEABB92AA8C268002F34CB /* Build configuration list for PBXNativeTarget "WMI" */;
+			buildPhases = (
+				71BEABAD2AA8C268002F34CB /* Headers */,
+				71BEABAE2AA8C268002F34CB /* Sources */,
+				71BEABAF2AA8C268002F34CB /* Frameworks */,
+				71BEABB02AA8C268002F34CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WMI;
+			productName = WMI;
+			productReference = 71BEABB22AA8C268002F34CB /* WMI.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+/* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		71D68FFF2AA7D01A00DEA696 /* Project object */ = {
@@ -21,6 +121,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					71BEABB12AA8C268002F34CB = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
 			};
 			buildConfigurationList = 71D690022AA7D01A00DEA696 /* Build configuration list for PBXProject "ROG" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -31,14 +136,223 @@
 				Base,
 			);
 			mainGroup = 71D68FFE2AA7D01A00DEA696;
+			productRefGroup = 71D6900B2AA7D22B00DEA696 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				71BEABB12AA8C268002F34CB /* WMI */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		71BEABB02AA8C268002F34CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		71BEABAE2AA8C268002F34CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71BEABC72AA8CF32002F34CB /* WMIUC.cpp in Sources */,
+				71BEABBF2AA8CEF8002F34CB /* WMI.cpp in Sources */,
+				71BEABC32AA8CF14002F34CB /* KeyImplementations.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
 /* Begin XCBuildConfiguration section */
+		71BEABB72AA8C268002F34CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"MODULE_VERSION=$(MODULE_VERSION)",
+					"PRODUCT_NAME=$(PRODUCT_NAME)",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
+					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+					"$(PROJECT_DIR)/MacKernelSDK/Headers",
+				);
+				INFOPLIST_FILE = WMI/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
+				MODULE_NAME = com.sieskei.ROG.WMI;
+				MODULE_START = "$(PRODUCT_NAME)_kern_start";
+				MODULE_STOP = "$(PRODUCT_NAME)_kern_start";
+				MODULE_VERSION = 1.0.0d1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sieskei.ROG-WMI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		71BEABB82AA8C268002F34CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"MODULE_VERSION=$(MODULE_VERSION)",
+					"PRODUCT_NAME=$(PRODUCT_NAME)",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/Lilu.kext/Contents/Resources",
+					"${PROJECT_DIR}/VirtualSMC.kext/Contents/Resources",
+					"$(PROJECT_DIR)/MacKernelSDK/Headers",
+				);
+				INFOPLIST_FILE = WMI/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
+				MODULE_NAME = com.sieskei.ROG.WMI;
+				MODULE_START = "$(PRODUCT_NAME)_kern_start";
+				MODULE_STOP = "$(PRODUCT_NAME)_kern_start";
+				MODULE_VERSION = 1.0.0d1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sieskei.ROG-WMI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
 		71D690032AA7D01A00DEA696 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -54,6 +368,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		71BEABB92AA8C268002F34CB /* Build configuration list for PBXNativeTarget "WMI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71BEABB72AA8C268002F34CB /* Debug */,
+				71BEABB82AA8C268002F34CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		71D690022AA7D01A00DEA696 /* Build configuration list for PBXProject "ROG" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
