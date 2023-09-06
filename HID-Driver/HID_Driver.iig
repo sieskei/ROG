@@ -1,0 +1,87 @@
+//
+//  HID_Driver.iig
+//  HID-Driver
+//
+//  Created by Nick on 7/20/20.
+//  Copyright © 2020 Nick. All rights reserved.
+//
+
+#ifndef HID_Driver_h
+#define HID_Driver_h
+
+#include <os/log.h>
+
+#define BIT(nr) (1UL << (nr))
+#define STOMS(x) (x * 1000)
+#define KBD_FEATURE_REPORT_ID 0x5a
+#define KBD_FEATURE_REPORT_ID1 0x5d
+#define KBD_FEATURE_REPORT_ID2 0x5e
+#define KBD_FEATURE_REPORT_SIZE 16
+#define LUX_FADE_OUT_DELAY STOMS(5 * 60)    /* 5 mins */
+#define kBooleanTrue 0x01
+
+#define LOG_PREFIX "ROG-HID - "
+#define OSLOG(...)                                          \
+do {                                                        \
+    os_log(OS_LOG_DEFAULT, LOG_PREFIX __VA_ARGS__);         \
+} while (0)
+
+#ifdef DEBUG
+
+#define DBGLOG(...)                                             \
+    do {                                                        \
+        OSLOG(__VA_ARGS__);                                     \
+    } while (0)
+
+#else
+
+#define DBGLOG(...) do { } while (0)
+
+#endif
+
+#include <HIDDriverKit/IOUserHIDEventDriver.iig>
+
+#include <Availability.h>
+#include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IOTimerDispatchSource.iig>
+
+
+typedef enum {
+    luxUp,
+    luxDown,
+} kLuxEvent;
+
+class HID_Driver: public IOUserHIDEventDriver
+{
+public:
+    virtual bool init() override;
+    virtual kern_return_t Start(IOService * provider) override;
+    virtual kern_return_t Stop(IOService * provider) override;
+    virtual void free() override;
+    virtual void handleKeyboardReport(uint64_t      timestamp,
+                                      uint32_t      reportID) override;
+    virtual kern_return_t dispatchKeyboardEvent(uint64_t timeStamp,
+                                                uint32_t usagePage,
+                                                uint32_t usage,
+                                                uint32_t value,
+                                                IOOptionBits options,
+                                                bool repeat) override;
+    virtual kern_return_t NewUserClient(uint32_t type,
+                                        IOUserClient** userClient) override;
+    
+private:
+    virtual void parseKeyboardElementsHook(OSArray* elements);
+    virtual void parseInfoPlist();
+    virtual void setKbdLux(kLuxEvent luxEvent);
+    
+    // Ported from hid-asus.c
+    virtual void rogNkeyLedInit();
+    virtual void setBacklight(uint8_t val);
+
+    // helpers
+    virtual kern_return_t setReport(uint32_t id,
+                                    OSData* data);
+
+};
+
+#endif /* HID_Driver_h */

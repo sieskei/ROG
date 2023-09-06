@@ -1,0 +1,28 @@
+//
+//  HIDUserClient.iig
+//  HID-Driver
+//
+//  Created by Nick on 2/16/21.
+//  Copyright © 2021 Nick. All rights reserved.
+//
+
+#ifndef HIDUserClient_h
+#define HIDUserClient_h
+
+#include <DriverKit/IOUserClient.iig>
+
+class HIDUserClient: public IOUserClient {
+    virtual bool init() override;
+    virtual void free() override;
+
+    virtual kern_return_t Start(IOService* provider) override;
+    virtual kern_return_t Stop(IOService* provider) override;
+
+    virtual kern_return_t ExternalMethod(uint64_t selector,
+                                         IOUserClientMethodArguments* arguments,
+                                         const IOUserClientMethodDispatch* dispatch,
+                                         OSObject* target,
+                                         void* reference) override;
+};
+
+#endif /* HIDUserClient_h */
