@@ -18,8 +18,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
         statusBar = .init()
-        
-        let _ = WMI.shared
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }

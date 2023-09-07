@@ -1,5 +1,9 @@
-//  Copyright © 2023 sieskei. Licensed under the Thou Shalt Not Profit License version 1.0. See LICENSE for
-//  details.
+//
+//  main.swift
+//  Gadget
+//
+//  Created by Miroslav Yozov on 6.09.23.
+//
 
 import AppKit
 

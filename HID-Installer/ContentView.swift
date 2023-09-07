@@ -11,15 +11,14 @@ import SystemExtensions
 struct ContentView : View {
     var body: some View {
         VStack {
-            Text("Welcome to ROG-HID Extension Manager")
-                .font(.headline)
+            Text("ROG-HID Driver Manager").font(.headline)
             Spacer()
             HStack {
                 Button(action: ExtensionManager.shared.activate) {
-                    Text("Activate ROG-HID Extension")
+                    Text("Install")
                 }
                 Button(action: ExtensionManager.shared.deactivate) {
-                    Text("Deactivate ROG-HID Extension")
+                    Text("Uninstall")
                 }
             }
         }

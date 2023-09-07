@@ -1,10 +1,9 @@
+//  ContentView.swift
+//  HID-Installer
 //
-//  ExtensionManger.swift
-//  ROG-HID
+//  Created by Miroslav Yozov on 6.09.23.
 //
-//  Created by Nick on 7/20/20.
-//  Copyright © 2020 Nick. All rights reserved.
-//
+
 
 import Foundation
 import SystemExtensions
@@ -40,20 +39,19 @@ class ExtensionManager: NSObject, OSSystemExtensionRequestDelegate {
 
 // MARK:- OSSystemExtensionRequest Delegate Methods
 extension ExtensionManager {
-    
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         return .cancel
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-        os_log("AsusHID-Driver :: Dext loading requires user approval")
+        os_log("ROG-HID-Driver :: Dext loading requires user approval")
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        os_log("AsusHID-Driver :: Dext loading finished with result: %@", result.rawValue)
+        os_log("ROG-HID-Driver :: Dext loading finished with result: %@", result.rawValue)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        os_log("AsusHID-Driver :: Dext loading failed with error: %@", error.localizedDescription)
+        os_log("ROG-HID-Driver :: Dext loading failed with error: %@", error.localizedDescription)
     }
 }

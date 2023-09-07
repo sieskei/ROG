@@ -122,16 +122,31 @@ struct PopupView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(nsImage: NSImage(named: "AppIcon")!).resizable().frame(width: 32.0, height: 32.0)
-                Text("ROG Gadget").font(.title).padding(.bottom, 5.0)
+                Image(nsImage: NSImage(named: "AppIcon")!)
+                    .resizable()
+                    .frame(width: 32.0, height: 32.0)
+                    .cornerRadius(8)
+                Text("ROG Gadget").font(.title)
             }
-            Button("Fan", action: { WMI.shared.togglePerformanceMode() }).padding(.bottom, 16)
-            ZStack {
-                Button("Exit", action: { exit(0) })
-                Spacer()
-                Text("sieskei").font(.caption.italic()).frame(maxWidth: .infinity, alignment: .trailing)
+            Spacer().frame(height: 16)
+            Button(action: {
+                // WMI.shared.togglePerformanceMode()
+            }) {
+                HStack {
+                    Image("fan")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                    Text("Fan Mode")
+                }
+                .padding(6)
+                .overlay(RoundedRectangle(cornerRadius: 8)
+                    .stroke(lineWidth: 1))
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0)
+            .buttonStyle(.plain)
+            Spacer().frame(height: 32)
+            Button("Exit", action: { exit(0) })
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0).padding(12.0)
     }
