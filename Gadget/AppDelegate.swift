@@ -18,10 +18,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
         statusBar = .init()
+        
+        // let _ = HID.shared
+        
+        
+        
+        var a = unsafeBitCast(HID.AsyncCallback, to: uintptr_t.self)
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool { true }
+    
+    func callback(refcon: UnsafeMutableRawPointer?, result: IOReturn, args: UnsafeMutablePointer<UnsafeMutableRawPointer?>?, numArgs: UInt32) {
+        // Your implementation here
+    }
 }
 

@@ -42,6 +42,13 @@
 			<integer>6582</integer>
 			<key>VendorID</key>
 			<integer>2821</integer>
+			<key>UserClientProperties</key>
+			<dict>
+				<key>IOClass</key>
+				<string>IOUserUserClient</string>
+				<key>IOUserClass</key>
+				<string>HID_UserClient</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>OSBundleUsageDescription</key>

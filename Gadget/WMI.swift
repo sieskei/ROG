@@ -11,13 +11,13 @@ import Cocoa
 enum WMISelector: UInt32 {
     case getVersionLength = 0
     case getVersion = 1
-    case togglePerformanceMode = 2
+    case toggleThrottleThermalPolicy = 2
 }
 
 class WMI {
-    static let shared = WMI()
+    static let shared: WMI = .init()
     private var connect: io_connect_t = 0
-
+    
     init() {
         if !self.initDriver() { self.alert("Please download ROG-WMI from the release page", critical: true) }
         // let mode = togglePerformanceMode()
@@ -40,13 +40,13 @@ class WMI {
     }
     
     @discardableResult
-    func togglePerformanceMode() -> Int {
+    func toggleThrottleThermalPolicy() -> Int {
         var scalarOut: UInt64 = 0
         var outputCount: UInt32 = 1
 
         _ = IOConnectCallMethod(
-            connect, WMISelector.togglePerformanceMode.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
-
+            connect, WMISelector.toggleThrottleThermalPolicy.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
+        
         return Int(scalarOut)
     }
 

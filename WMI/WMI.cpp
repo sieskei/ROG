@@ -39,7 +39,7 @@ bool WMI::start(IOService *provider) {
     initEC0Device();
     initBAT0Device();
     
-    setFansMode();
+    setThrottleThermalPolicy();
     setPowerLimits();
     
     registerVSMC();
@@ -77,7 +77,7 @@ IOService *WMI::probe(IOService *provider, SInt32 *score) {
         ret = this;
     }
     name->release();
-
+    
     return ret;
 }
 
@@ -143,32 +143,94 @@ void WMI::setPowerLimits() {
     
     int pl2 = wmi_evaluate_method(ASUS_WMI_METHODID_DEVS, ASUS_WMI_DEVID_PPT_PL2, 125);
     setProperty("WMI [PPT PL2]", pl2);
+
+    /*
+    IOMemoryDescriptor* mmioDescriptor;
+    
+    // Define the physical address and size of the MMIO region
+    mach_vm_address_t physicalAddress = 0xFED159A0;  // Replace with your actual physical address
+    mach_vm_size_t length = sizeof(UInt32); // Size of the MMIO register (usually 4 bytes)
+    IODirection direction = kIODirectionInOut; // Writing to the MMIO register
+
+    // Allocate memory for MMIO
+    mmioDescriptor = IOMemoryDescriptor::withPhysicalAddress(
+        physicalAddress,       // Physical address of MMIO region
+        length,                // Length of MMIO region
+        direction              // Direction (read or write)
+    );
+    
+    if (!mmioDescriptor) {
+        setProperty("MMIO [descriptor]", false);
+        return;
+    }
+    setProperty("MMIO [descriptor]", true);
+    
+    if (mmioDescriptor->prepare() != kIOReturnSuccess) {
+        setProperty("MMIO [descriptor.prepare]", false);
+        mmioDescriptor->release();
+        return;
+    }
+    setProperty("MMIO [descriptor.prepare]", true);
+    
+    
+    // Create a memory map for MMIO
+    IOMemoryMap* mmioMap;
+    mmioMap = mmioDescriptor->map();
+
+    if (!mmioMap) {
+        setProperty("MMIO [descriptor.map]", false);
+        mmioDescriptor->complete();
+        mmioDescriptor->release();
+        return;
+    }
+    setProperty("MMIO [descriptor.map]", true);
+    
+    volatile UInt32* mmioRegisters; // Make the pointer volatile for MMIO
+    // Get a properly typed pointer to the mapped memory
+    mmioRegisters = reinterpret_cast<volatile UInt32*>(mmioMap->getVirtualAddress());
+    
+    UInt32 registerValue = mmioRegisters[0];
+    char mmioRegisters_str[64]; // Make sure the array is large enough to hold the resulting string
+    sprintf(mmioRegisters_str, "%d", registerValue); // Convert int to string
+    setProperty("MMIO [mmioRegisters]", mmioRegisters_str);
+    
+    if (mmioMap) {
+        mmioMap->release();
+    }
+    if (mmioDescriptor) {
+        mmioDescriptor->complete();
+        mmioDescriptor->release();
+    }
+    */
 }
 
-void WMI::setFansMode() {
-    // 0 - balanced
-    // 1 - turbo
-    // 2 - silent
-    int ttp = wmi_evaluate_method(ASUS_WMI_METHODID_DEVS, ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY, fans_mode);
-    setProperty("WMI [TT policy mode]", fans_mode);
-    setProperty("WMI [TT policy result]", ttp);
+void WMI::setThrottleThermalPolicy() {
+    char tt_policy_str[8]; // Make sure the array is large enough to hold the resulting string
+    sprintf(tt_policy_str, "%d", tt_policy); // Convert int to string
+    setProperty("WMI [TTP mode]", tt_policy_str);
+    
+    int fbm = wmi_evaluate_method(ASUS_WMI_METHODID_DEVS, ASUS_WMI_DEVID_FAN_BOOST_MODE, tt_policy);
+    setProperty("WMI [FBM result]", fbm);
+    
+    int ttp = wmi_evaluate_method(ASUS_WMI_METHODID_DEVS, ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY, tt_policy);
+    setProperty("WMI [TTP result]", ttp);
 }
 
-int WMI::togglePerformanceMode() {
-    switch (fans_mode) {
-        case 0:
-            fans_mode = 1;
+int WMI::toogleThrottleThermalPolicy() {
+    switch (tt_policy) {
+        case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST;
             break;
-        case 1:
-            fans_mode = 2;
+        case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_SILENT;
             break;
-        case 2:
-            fans_mode = 0;
+        case ASUS_THROTTLE_THERMAL_POLICY_SILENT:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_DEFAULT;
             break;
     }
     
-    setFansMode();
-    return fans_mode;
+    setThrottleThermalPolicy();
+    return tt_policy;
 }
 
 void WMI::registerVSMC() {

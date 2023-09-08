@@ -18,7 +18,7 @@ struct WMISelector {
     enum : uint32_t {
         GetVersionLength = 0,
         GetVersion,
-        ToggleFansMode,
+        ToggleThrottleThermalPolicy,
     };
 };
 

@@ -130,7 +130,7 @@ struct PopupView: View {
             }
             Spacer().frame(height: 16)
             Button(action: {
-                // WMI.shared.togglePerformanceMode()
+                WMI.shared.toggleThrottleThermalPolicy()
             }) {
                 HStack {
                     Image("fan")
@@ -139,6 +139,7 @@ struct PopupView: View {
                         .scaledToFit()
                         .frame(width: 24, height: 24)
                     Text("Fan Mode")
+                        .fontWeight(.bold)
                 }
                 .padding(6)
                 .overlay(RoundedRectangle(cornerRadius: 8)

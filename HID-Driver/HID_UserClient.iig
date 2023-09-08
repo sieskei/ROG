@@ -11,7 +11,13 @@
 
 #include <DriverKit/IOUserClient.iig>
 
-class HIDUserClient: public IOUserClient {
+
+class HID_UserClient: public IOUserClient {
+public:
+    // Provide a means to register our async callback with the dext.
+    static kern_return_t StaticRegisterAsyncCallback(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t RegisterAsyncCallback(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
     virtual bool init() override;
     virtual void free() override;
 
@@ -23,6 +29,7 @@ class HIDUserClient: public IOUserClient {
                                          const IOUserClientMethodDispatch* dispatch,
                                          OSObject* target,
                                          void* reference) override;
+    
 };
 
 #endif /* HIDUserClient_h */

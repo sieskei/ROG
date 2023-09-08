@@ -20,9 +20,15 @@
 #define ASUS_WMI_DSTS_PRESENCE_BIT     0x00010000
 #define ASUS_WMI_DEVID_RSOC            0x00120057
 
+#define ASUS_WMI_DEVID_FAN_BOOST_MODE          0x00110018
 #define ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY 0x00120075
-#define ASUS_WMI_DEVID_PPT_PL1                   0x001200A0 // PL1
-#define ASUS_WMI_DEVID_PPT_PL2                   0x001200A3 // PL2
+
+#define ASUS_THROTTLE_THERMAL_POLICY_DEFAULT   0
+#define ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST 1
+#define ASUS_THROTTLE_THERMAL_POLICY_SILENT    2
+
+#define ASUS_WMI_DEVID_PPT_PL1 0x001200A0 // PL1
+#define ASUS_WMI_DEVID_PPT_PL2 0x001200A3 // PL2
 
 class WMI : public IOService {
     OSDeclareDefaultStructors(WMI)
@@ -73,14 +79,14 @@ private:
     int wmi_get_devstate(uint32_t dev_id);
     bool wmi_dev_is_present(uint32_t dev_id);
     
-    int fans_mode {0};
+    int tt_policy { ASUS_THROTTLE_THERMAL_POLICY_DEFAULT }; // THROTTLE THERMAL POLICY
     
     void initATKDevice();
     void initEC0Device();
     void initBAT0Device();
     
     void setPowerLimits();
-    void setFansMode();
+    void setThrottleThermalPolicy();
     
     void registerVSMC();
     
@@ -95,8 +101,7 @@ private:
     static bool vsmcNotificationHandler(void *sensors, void *refCon, IOService *vsmc, IONotifier *notifier);
     
 public:
-    
-    int togglePerformanceMode();
+    int toogleThrottleThermalPolicy();
 };
 
 #endif /* WMI_hpp */

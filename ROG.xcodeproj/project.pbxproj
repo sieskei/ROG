@@ -13,14 +13,15 @@
 		7122ED1D2AA8D6F700B7F38D /* HID_Driver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED1C2AA8D6F700B7F38D /* HID_Driver.iig */; };
 		7122ED292AA8DC8500B7F38D /* IOBufferMemoryDescriptorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 7122ED282AA8DC8500B7F38D /* IOBufferMemoryDescriptorUtility.h */; };
 		7122ED2B2AA8DC9A00B7F38D /* HIDUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 7122ED2A2AA8DC9A00B7F38D /* HIDUsageTables.h */; };
-		7122ED2E2AA8DCCE00B7F38D /* HIDUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2C2AA8DCCE00B7F38D /* HIDUserClient.cpp */; };
-		7122ED2F2AA8DCCE00B7F38D /* HIDUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2D2AA8DCCE00B7F38D /* HIDUserClient.iig */; };
+		7122ED2E2AA8DCCE00B7F38D /* HID_UserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2C2AA8DCCE00B7F38D /* HID_UserClient.cpp */; };
+		7122ED2F2AA8DCCE00B7F38D /* HID_UserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */; };
 		7171A17B2AA908DD000AA425 /* HID_InstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */; };
 		7171A17D2AA908DD000AA425 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17C2AA908DD000AA425 /* ContentView.swift */; };
 		7171A17F2AA908DE000AA425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7171A17E2AA908DE000AA425 /* Assets.xcassets */; };
 		7171A1822AA908DE000AA425 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7171A1812AA908DE000AA425 /* Preview Assets.xcassets */; };
 		7171A1872AA9090C000AA425 /* com.sieskei.ROG-HID-Driver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 7122ED172AA8D6F600B7F38D /* com.sieskei.ROG-HID-Driver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7171A18C2AA90975000AA425 /* ExtensionManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A18B2AA90975000AA425 /* ExtensionManger.swift */; };
+		71B561D82AAB1D3500725A07 /* HID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B561D72AAB1D3500725A07 /* HID.swift */; };
 		71BEABBC2AA8C686002F34CB /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71BEABBB2AA8C67C002F34CB /* libkmod.a */; };
 		71BEABBF2AA8CEF8002F34CB /* WMI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABBD2AA8CEF8002F34CB /* WMI.cpp */; };
 		71BEABC02AA8CEF8002F34CB /* WMI.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71BEABBE2AA8CEF8002F34CB /* WMI.hpp */; };
@@ -70,8 +71,8 @@
 		7122ED262AA8D84E00B7F38D /* HID_Driver.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = HID_Driver.entitlements; sourceTree = "<group>"; };
 		7122ED282AA8DC8500B7F38D /* IOBufferMemoryDescriptorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOBufferMemoryDescriptorUtility.h; sourceTree = "<group>"; };
 		7122ED2A2AA8DC9A00B7F38D /* HIDUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDUsageTables.h; sourceTree = "<group>"; };
-		7122ED2C2AA8DCCE00B7F38D /* HIDUserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HIDUserClient.cpp; sourceTree = "<group>"; };
-		7122ED2D2AA8DCCE00B7F38D /* HIDUserClient.iig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.iig; path = HIDUserClient.iig; sourceTree = "<group>"; };
+		7122ED2C2AA8DCCE00B7F38D /* HID_UserClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HID_UserClient.cpp; sourceTree = "<group>"; };
+		7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.iig; path = HID_UserClient.iig; sourceTree = "<group>"; };
 		7171A1782AA908DD000AA425 /* HID-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HID-Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID_InstallerApp.swift; sourceTree = "<group>"; };
 		7171A17C2AA908DD000AA425 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +80,7 @@
 		7171A1812AA908DE000AA425 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7171A1832AA908DE000AA425 /* HID_Installer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HID_Installer.entitlements; sourceTree = "<group>"; };
 		7171A18B2AA90975000AA425 /* ExtensionManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionManger.swift; sourceTree = "<group>"; };
+		71B561D72AAB1D3500725A07 /* HID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID.swift; sourceTree = "<group>"; };
 		71BEABB22AA8C268002F34CB /* WMI.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMI.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		71BEABB62AA8C268002F34CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71BEABBB2AA8C67C002F34CB /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = usr/lib/libkmod.a; sourceTree = SDKROOT; };
@@ -136,24 +138,16 @@
 		7122ED192AA8D6F700B7F38D /* HID-Driver */ = {
 			isa = PBXGroup;
 			children = (
-				7122ED272AA8DC3E00B7F38D /* UserClient */,
+				7122ED2A2AA8DC9A00B7F38D /* HIDUsageTables.h */,
+				7122ED282AA8DC8500B7F38D /* IOBufferMemoryDescriptorUtility.h */,
 				7122ED1A2AA8D6F700B7F38D /* HID_Driver.cpp */,
 				7122ED1C2AA8D6F700B7F38D /* HID_Driver.iig */,
-				7122ED282AA8DC8500B7F38D /* IOBufferMemoryDescriptorUtility.h */,
-				7122ED2A2AA8DC9A00B7F38D /* HIDUsageTables.h */,
+				7122ED2C2AA8DCCE00B7F38D /* HID_UserClient.cpp */,
+				7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */,
 				7122ED1E2AA8D6F700B7F38D /* Info.plist */,
 				7122ED262AA8D84E00B7F38D /* HID_Driver.entitlements */,
 			);
 			path = "HID-Driver";
-			sourceTree = "<group>";
-		};
-		7122ED272AA8DC3E00B7F38D /* UserClient */ = {
-			isa = PBXGroup;
-			children = (
-				7122ED2C2AA8DCCE00B7F38D /* HIDUserClient.cpp */,
-				7122ED2D2AA8DCCE00B7F38D /* HIDUserClient.iig */,
-			);
-			path = UserClient;
 			sourceTree = "<group>";
 		};
 		7171A1792AA908DD000AA425 /* HID-Installer */ = {
@@ -232,6 +226,7 @@
 				71E93B012AA9176B003DBB97 /* ViewController.swift */,
 				71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */,
 				71E93B102AA91F59003DBB97 /* WMI.swift */,
+				71B561D72AAB1D3500725A07 /* HID.swift */,
 				71E93B032AA9176C003DBB97 /* Assets.xcassets */,
 				71E93B082AA9176C003DBB97 /* Gadget.entitlements */,
 			);
@@ -421,8 +416,8 @@
 			files = (
 				7122ED1B2AA8D6F700B7F38D /* HID_Driver.cpp in Sources */,
 				7122ED1D2AA8D6F700B7F38D /* HID_Driver.iig in Sources */,
-				7122ED2F2AA8DCCE00B7F38D /* HIDUserClient.iig in Sources */,
-				7122ED2E2AA8DCCE00B7F38D /* HIDUserClient.cpp in Sources */,
+				7122ED2E2AA8DCCE00B7F38D /* HID_UserClient.cpp in Sources */,
+				7122ED2F2AA8DCCE00B7F38D /* HID_UserClient.iig in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +448,7 @@
 				71E93B022AA9176B003DBB97 /* ViewController.swift in Sources */,
 				71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */,
 				71E93B002AA9176B003DBB97 /* AppDelegate.swift in Sources */,
+				71B561D82AAB1D3500725A07 /* HID.swift in Sources */,
 				71E93B112AA91F59003DBB97 /* WMI.swift in Sources */,
 				71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */,
 			);

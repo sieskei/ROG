@@ -7,12 +7,11 @@
 //
 
 #include <HIDDriverKit/HIDDriverKit.h>
+#include <DriverKit/IOUserClient.h>
 
 #include "HID_Driver.h"
 #include "HIDUsageTables.h"
 #include "IOBufferMemoryDescriptorUtility.h"
-
-#include <DriverKit/IOUserClient.h>
 
 #undef super
 #define super IOUserHIDEventDriver
@@ -89,6 +88,10 @@ kern_return_t IMPL(HID_Driver, Start)
     // And register ourselves with the system
     DBGLOG("Register service");
     RegisterService();
+    
+    
+    
+    
 
     return ret;
 }

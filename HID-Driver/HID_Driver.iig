@@ -45,7 +45,6 @@ do {                                                        \
 #include <DriverKit/IOUserClient.iig>
 #include <DriverKit/IOTimerDispatchSource.iig>
 
-
 typedef enum {
     luxUp,
     luxDown,
@@ -81,7 +80,6 @@ private:
     // helpers
     virtual kern_return_t setReport(uint32_t id,
                                     OSData* data);
-
 };
 
 #endif /* HID_Driver_h */

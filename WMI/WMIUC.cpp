@@ -68,9 +68,9 @@ IOReturn WMIUserClient::externalMethod(uint32_t selector, IOExternalMethodArgume
             memcpy(arguments->structureOutput, version, sizeof(version));
             break;
         }
-        case WMISelector::ToggleFansMode: {
+        case WMISelector::ToggleThrottleThermalPolicy: {
             arguments->scalarOutputCount = 1;
-            *arguments->scalarOutput = wmi->togglePerformanceMode();
+            *arguments->scalarOutput = wmi->toogleThrottleThermalPolicy();
             arguments->structureOutputSize = 0;
             break;
         }
