@@ -60,6 +60,13 @@ constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
     }
     self.runLoopSource = runLoopSource;
     
+    // Async initialization
+    CFRunLoopRef globalRunLoop = CFRunLoopGetCurrent();
+    CFRetain(globalRunLoop);
+    
+    // Establish our notifications in the run loop, so we can get callbacks.
+    CFRunLoopAddSource(globalRunLoop, runLoopSource, kCFRunLoopDefaultMode);
+    
     
     kern_return_t ret = IOConnectCallAsyncStructMethod(connect,
                                                        MessageType_RegisterAsyncCallback,
@@ -82,7 +89,7 @@ constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
 }
 
 static void AsyncCallback(void* refcon, IOReturn result, void** args, uint32_t numArgs) {
-    
+    printf("called ...");
     
     
 }

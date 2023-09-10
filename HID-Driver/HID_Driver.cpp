@@ -5,7 +5,6 @@
 //  Created by Nick on 7/20/20.
 //  Copyright © 2020 Nick. All rights reserved.
 //
-
 #include <HIDDriverKit/HIDDriverKit.h>
 #include <DriverKit/IOUserClient.h>
 
@@ -23,11 +22,14 @@ struct HID_Driver_IVars
     uint8_t kbdLux                          { 0 };
     bool fixCapsLockLED                     { false };
     bool bkltAutoTurnOff                    { false };
+    
+    OSAction* callbackAction { nullptr };
 };
 
 #define _hid_interface              ivars->hid_interface
 #define _custom_keyboard_elements   ivars->customKeyboardElements
 #define _current_lux                ivars->kbdLux
+#define _callbackAction             ivars->callbackAction
 
 bool HID_Driver::init()
 {
@@ -89,10 +91,6 @@ kern_return_t IMPL(HID_Driver, Start)
     DBGLOG("Register service");
     RegisterService();
     
-    
-    
-    
-
     return ret;
 }
 
@@ -219,6 +217,14 @@ kern_return_t HID_Driver::dispatchKeyboardEvent(uint64_t timeStamp, uint32_t usa
                 break;
             case kHIDUsage_AsusVendor_IlluminationUp:
                 setKbdLux(luxUp);
+                break;
+            case kHIDUsage_AsusVendor_Fan:
+                if (_callbackAction != nullptr)
+                {
+                    uint64_t asyncData[2] = { 1 };
+                    asyncData[1] = 5;
+                    // AsyncCompletion(_callbackAction, kIOReturnSuccess, asyncData, 2);
+                }
                 break;
         }
     }

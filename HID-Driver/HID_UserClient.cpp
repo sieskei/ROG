@@ -66,8 +66,9 @@ kern_return_t HID_UserClient::RegisterAsyncCallback(void* reference, IOUserClien
     ivars->callbackAction = arguments->completion;
     ivars->callbackAction->retain();
     
-    uint64_t asyncData[0] = { };
-    AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 0);
+    uint64_t asyncData[2] = { 1 };
+    asyncData[1] = 5;
+    AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 2);
 
     return kIOReturnSuccess;
 }
