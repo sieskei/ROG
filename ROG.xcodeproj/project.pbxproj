@@ -16,7 +16,7 @@
 		7122ED2E2AA8DCCE00B7F38D /* HID_UserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2C2AA8DCCE00B7F38D /* HID_UserClient.cpp */; };
 		7122ED2F2AA8DCCE00B7F38D /* HID_UserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */; };
 		7167F2ED2AABC2D600E911DB /* HIDWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7167F2EC2AABC2D600E911DB /* HIDWrapper.mm */; };
-		7167F2F02AABC3E000E911DB /* MySwiftClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167F2EF2AABC3E000E911DB /* MySwiftClass.swift */; };
+		7167F2F02AABC3E000E911DB /* HID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167F2EF2AABC3E000E911DB /* HID.swift */; };
 		7171A17B2AA908DD000AA425 /* HID_InstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */; };
 		7171A17D2AA908DD000AA425 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17C2AA908DD000AA425 /* ContentView.swift */; };
 		7171A17F2AA908DE000AA425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7171A17E2AA908DE000AA425 /* Assets.xcassets */; };
@@ -76,7 +76,7 @@
 		7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.iig; path = HID_UserClient.iig; sourceTree = "<group>"; };
 		7167F2EC2AABC2D600E911DB /* HIDWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HIDWrapper.mm; sourceTree = "<group>"; };
 		7167F2EE2AABC2EE00E911DB /* HIDWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDWrapper.h; sourceTree = "<group>"; };
-		7167F2EF2AABC3E000E911DB /* MySwiftClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySwiftClass.swift; sourceTree = "<group>"; };
+		7167F2EF2AABC3E000E911DB /* HID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID.swift; sourceTree = "<group>"; };
 		7167F2F12AABC49B00E911DB /* Gadget-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gadget-Bridging-Header.h"; sourceTree = "<group>"; };
 		7171A1782AA908DD000AA425 /* HID-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HID-Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID_InstallerApp.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 			children = (
 				7167F2EE2AABC2EE00E911DB /* HIDWrapper.h */,
 				7167F2EC2AABC2D600E911DB /* HIDWrapper.mm */,
-				7167F2EF2AABC3E000E911DB /* MySwiftClass.swift */,
+				7167F2EF2AABC3E000E911DB /* HID.swift */,
 			);
 			path = HID;
 			sourceTree = "<group>";
@@ -465,7 +465,7 @@
 				71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */,
 				71E93B002AA9176B003DBB97 /* AppDelegate.swift in Sources */,
 				7167F2ED2AABC2D600E911DB /* HIDWrapper.mm in Sources */,
-				7167F2F02AABC3E000E911DB /* MySwiftClass.swift in Sources */,
+				7167F2F02AABC3E000E911DB /* HID.swift in Sources */,
 				71E93B112AA91F59003DBB97 /* WMI.swift in Sources */,
 				71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */,
 			);

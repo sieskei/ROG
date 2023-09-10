@@ -19,10 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
         statusBar = .init()
         
-        // let _ = HID.shared
-        
-//        let swiftClass: MySwiftClass = .init()
-//        print(swiftClass.add(a: 5, b: 5))
+        HID.shared.initDriver()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }
