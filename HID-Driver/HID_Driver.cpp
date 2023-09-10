@@ -397,7 +397,8 @@ kern_return_t IMPL(HID_Driver, setReport)
     if (ret == kIOReturnSuccess)
     {
         _hid_interface->SetReport(report, kIOHIDReportTypeFeature, id, 0);
-    } else {
+    } else
+    {
         OSLOG("Error allocating memory for report");
     }
 
@@ -410,20 +411,18 @@ kern_return_t IMPL(HID_Driver, NewUserClient) {
     IOService *client {nullptr};
 
     auto ret = Create(this, "UserClientProperties", &client);
-    if (ret != kIOReturnSuccess) {
+    if (ret != kIOReturnSuccess)
+    {
         DBGLOG("Newuserclient create failed");
-
         return ret;
     }
 
     DBGLOG("Created user client successfully");
-
     *userClient = OSDynamicCast(IOUserClient, client);
-
-    if (!*userClient) {
+    if (!*userClient)
+    {
         DBGLOG("Dynamic cast failed");
         client->release();
-
         return kIOReturnError;
     }
 

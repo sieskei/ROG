@@ -16,6 +16,11 @@ struct HID_UserClient_IVars {
     OSAction* callbackAction { nullptr };
 };
 
+typedef struct
+{
+    uint64_t id;
+} DataStruct;
+
 // This struct should ideally be shared across all applications using the driver, as the integer values need to be the same across all programs.
 typedef enum
 {
@@ -47,7 +52,6 @@ kern_return_t HID_UserClient::StaticRegisterAsyncCallback(OSObject* target, void
 
 kern_return_t HID_UserClient::RegisterAsyncCallback(void* reference, IOUserClientMethodArguments* arguments)
 {
-    
     DBGLOG("Got new async callback");
 
     /// - Tag: RegisterAsyncCallback_StoreCompletion
@@ -61,6 +65,9 @@ kern_return_t HID_UserClient::RegisterAsyncCallback(void* reference, IOUserClien
     // If not saved, then it might be freed before the asychronous return.
     ivars->callbackAction = arguments->completion;
     ivars->callbackAction->retain();
+    
+    uint64_t asyncData[0] = { };
+    AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 0);
 
     return kIOReturnSuccess;
 }
@@ -100,9 +107,13 @@ void HID_UserClient::free() {
 kern_return_t IMPL(HID_UserClient, Start) {
     DBGLOG("Userclient start");
     
-    if (!super::Start(provider)) {
-        DBGLOG("Userclient super::start failed");
-        return kIOReturnError;
+    kern_return_t ret = kIOReturnSuccess;
+
+    ret = Start(provider, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess)
+    {
+        DBGLOG("Start() - super::Start failed with error: 0x%08x.", ret);
+        return ret;
     }
     
     ivars->driver = OSDynamicCast(HID_Driver, provider);
@@ -112,7 +123,7 @@ kern_return_t IMPL(HID_UserClient, Start) {
         return kIOReturnError;
     }
     
-    return kIOReturnSuccess;
+    return ret;
 }
 
 kern_return_t IMPL(HID_UserClient, Stop) {
@@ -138,4 +149,26 @@ kern_return_t HID_UserClient::ExternalMethod(uint64_t selector, IOUserClientMeth
     }
 
     return kIOReturnSuccess;
+}
+
+// MARK: SimulatedAsyncEvent Callback
+void IMPL(HID_UserClient, SimulatedAsyncEvent)
+{
+//    Log("Woke async at time: %llu!", time);
+//
+//    // Get back our data previously stored in OSAction.
+//    DataStruct* input = (DataStruct*)action->GetReference();
+//
+//    DataStruct output = {};
+//    output.foo = input->foo + 1;
+//    output.bar = input->bar + 10;
+//
+//    uint64_t asyncData[3] = { 2 };
+//    memcpy(asyncData + 1, &output, sizeof(DataStruct));
+//
+//    if (ivars->callbackAction != nullptr)
+//    {
+//        // 3 is the 1 leading "type" message plus the two elements of the DataStruct.
+//        AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 3);
+//    }
 }

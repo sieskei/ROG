@@ -21,18 +21,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // let _ = HID.shared
         
-        
-        
-        var a = unsafeBitCast(HID.AsyncCallback, to: uintptr_t.self)
-        
+//        let swiftClass: MySwiftClass = .init()
+//        print(swiftClass.add(a: 5, b: 5))
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool { true }
-    
-    func callback(refcon: UnsafeMutableRawPointer?, result: IOReturn, args: UnsafeMutablePointer<UnsafeMutableRawPointer?>?, numArgs: UInt32) {
-        // Your implementation here
-    }
 }
 
