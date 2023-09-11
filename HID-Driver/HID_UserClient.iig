@@ -32,8 +32,7 @@ public:
                                          OSObject* target,
                                          void* reference) override;
     
-    // This function is called to simulate a device taking some time to complete an action and calling back the dext asynchronously.
-    virtual void SimulatedAsyncEvent(OSAction* action, uint64_t time) TYPE(IOTimerDispatchSource::TimerOccurred);
+    virtual void onFanEvent();
 };
 
 #endif /* HIDUserClient_h */

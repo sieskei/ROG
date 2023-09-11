@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
         statusBar = .init()
         
-        // HID.shared.initDriver()
+        HID.shared.initDriver()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }

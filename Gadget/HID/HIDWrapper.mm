@@ -94,7 +94,6 @@ constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
 static void AsyncCallback(void* refcon, IOReturn result, void** args, uint32_t numArgs) {
     printf("called ...");
     
-    
 }
 
 @end

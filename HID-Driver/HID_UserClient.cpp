@@ -13,7 +13,7 @@
 /// - Tag: HIDUserClient_IVars
 struct HID_UserClient_IVars {
     HID_Driver *driver { nullptr };
-    OSAction* callbackAction { nullptr };
+    OSAction* callback { nullptr };
 };
 
 typedef struct
@@ -63,13 +63,13 @@ kern_return_t HID_UserClient::RegisterAsyncCallback(void* reference, IOUserClien
 
     // Save the completion for later.
     // If not saved, then it might be freed before the asychronous return.
-    ivars->callbackAction = arguments->completion;
-    ivars->callbackAction->retain();
+    ivars->callback = arguments->completion;
+    ivars->callback->retain();
     
     uint64_t asyncData[2] = { 1 };
     asyncData[1] = 5;
-    AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 2);
-
+    AsyncCompletion(ivars->callback, kIOReturnSuccess, asyncData, 2);
+    
     return kIOReturnSuccess;
 }
 
@@ -99,7 +99,7 @@ void HID_UserClient::free() {
     DBGLOG("Userclient free");
     
     OSSafeReleaseNULL(ivars->driver);
-    OSSafeReleaseNULL(ivars->callbackAction);
+    OSSafeReleaseNULL(ivars->callback);
     IOSafeDeleteNULL(ivars, HID_UserClient_IVars, 1);
     
     super::free();
@@ -152,24 +152,12 @@ kern_return_t HID_UserClient::ExternalMethod(uint64_t selector, IOUserClientMeth
     return kIOReturnSuccess;
 }
 
-// MARK: SimulatedAsyncEvent Callback
-void IMPL(HID_UserClient, SimulatedAsyncEvent)
-{
-//    Log("Woke async at time: %llu!", time);
-//
-//    // Get back our data previously stored in OSAction.
-//    DataStruct* input = (DataStruct*)action->GetReference();
-//
-//    DataStruct output = {};
-//    output.foo = input->foo + 1;
-//    output.bar = input->bar + 10;
-//
-//    uint64_t asyncData[3] = { 2 };
-//    memcpy(asyncData + 1, &output, sizeof(DataStruct));
-//
-//    if (ivars->callbackAction != nullptr)
-//    {
-//        // 3 is the 1 leading "type" message plus the two elements of the DataStruct.
-//        AsyncCompletion(ivars->callbackAction, kIOReturnSuccess, asyncData, 3);
-//    }
+void IMPL(HID_UserClient, onFanEvent) {
+    DBGLOG("Userclient on fan event");
+    
+    if (ivars->callback != nullptr) {
+        uint64_t asyncData[2] = { 1 };
+        asyncData[1] = 5;
+        AsyncCompletion(ivars->callback, kIOReturnSuccess, asyncData, 2);
+    }
 }

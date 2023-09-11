@@ -9,8 +9,10 @@
 #include <DriverKit/IOUserClient.h>
 
 #include "HID_Driver.h"
+#include "HID_UserClient.h"
 #include "HIDUsageTables.h"
 #include "IOBufferMemoryDescriptorUtility.h"
+
 
 #undef super
 #define super IOUserHIDEventDriver
@@ -23,13 +25,12 @@ struct HID_Driver_IVars
     bool fixCapsLockLED                     { false };
     bool bkltAutoTurnOff                    { false };
     
-    OSAction* callbackAction { nullptr };
+    HID_UserClient* client { nullptr };
 };
 
 #define _hid_interface              ivars->hid_interface
 #define _custom_keyboard_elements   ivars->customKeyboardElements
 #define _current_lux                ivars->kbdLux
-#define _callbackAction             ivars->callbackAction
 
 bool HID_Driver::init()
 {
@@ -219,11 +220,15 @@ kern_return_t HID_Driver::dispatchKeyboardEvent(uint64_t timeStamp, uint32_t usa
                 setKbdLux(luxUp);
                 break;
             case kHIDUsage_AsusVendor_Fan:
-                if (_callbackAction != nullptr)
+                if (ivars->client != nullptr)
                 {
-                    uint64_t asyncData[2] = { 1 };
-                    asyncData[1] = 5;
-                    // AsyncCompletion(_callbackAction, kIOReturnSuccess, asyncData, 2);
+                    ivars->client->onFanEvent();
+                }
+                break;
+            case kHIDUsage_AsusVendor_Fan2:
+                if (ivars->client != nullptr)
+                {
+                    ivars->client->onFanEvent();
                 }
                 break;
         }
@@ -414,7 +419,7 @@ kern_return_t IMPL(HID_Driver, setReport)
 }
 
 kern_return_t IMPL(HID_Driver, NewUserClient) {
-    IOService *client {nullptr};
+    IOService *client { nullptr };
 
     auto ret = Create(this, "UserClientProperties", &client);
     if (ret != kIOReturnSuccess)
@@ -422,15 +427,20 @@ kern_return_t IMPL(HID_Driver, NewUserClient) {
         DBGLOG("Newuserclient create failed");
         return ret;
     }
-
+    
     DBGLOG("Created user client successfully");
-    *userClient = OSDynamicCast(IOUserClient, client);
-    if (!*userClient)
+    
+    HID_UserClient* hidClient = OSDynamicCast(HID_UserClient, client);
+    if (hidClient != nullptr)
     {
+        *userClient = hidClient;
+        ivars->client = hidClient;
+        ivars->client->retain();
+    } else {
         DBGLOG("Dynamic cast failed");
         client->release();
         return kIOReturnError;
     }
-
+    
     return kIOReturnSuccess;
 }
