@@ -31,7 +31,6 @@
 		71BEABC72AA8CF32002F34CB /* WMIUC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABC52AA8CF32002F34CB /* WMIUC.cpp */; };
 		71BEABC82AA8CF32002F34CB /* WMIUC.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 71BEABC62AA8CF32002F34CB /* WMIUC.hpp */; };
 		71E93B002AA9176B003DBB97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93AFF2AA9176B003DBB97 /* AppDelegate.swift */; };
-		71E93B022AA9176B003DBB97 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B012AA9176B003DBB97 /* ViewController.swift */; };
 		71E93B042AA9176C003DBB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E93B032AA9176C003DBB97 /* Assets.xcassets */; };
 		71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B0C2AA91B2C003DBB97 /* main.swift */; };
 		71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */; };
@@ -96,7 +95,6 @@
 		71BEABC62AA8CF32002F34CB /* WMIUC.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WMIUC.hpp; sourceTree = "<group>"; };
 		71E93AFD2AA9176B003DBB97 /* ROG-Gadget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ROG-Gadget.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E93AFF2AA9176B003DBB97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		71E93B012AA9176B003DBB97 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		71E93B032AA9176C003DBB97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71E93B082AA9176C003DBB97 /* Gadget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gadget.entitlements; sourceTree = "<group>"; };
 		71E93B0C2AA91B2C003DBB97 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				71856EB92AAE41EE004A1DD9 /* HID */,
 				71E93B0C2AA91B2C003DBB97 /* main.swift */,
 				71E93AFF2AA9176B003DBB97 /* AppDelegate.swift */,
-				71E93B012AA9176B003DBB97 /* ViewController.swift */,
 				71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */,
 				7167F2F12AABC49B00E911DB /* Gadget-Bridging-Header.h */,
 				71E93B082AA9176C003DBB97 /* Gadget.entitlements */,
@@ -461,7 +458,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71E93B022AA9176B003DBB97 /* ViewController.swift in Sources */,
 				71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */,
 				71E93B002AA9176B003DBB97 /* AppDelegate.swift in Sources */,
 				7167F2ED2AABC2D600E911DB /* HIDWrapper.mm in Sources */,

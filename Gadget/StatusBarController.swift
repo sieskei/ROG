@@ -21,35 +21,58 @@ private class StatusbarView: NSView {
         pStyle.minimumLineHeight = compactLH
         pStyle.maximumLineHeight = compactLH
 
-        self.compactLabel = [
+        compactLabel = [
             .font: NSFont.monospacedSystemFont(ofSize: 7.2, weight: .regular), .foregroundColor: NSColor.labelColor,
             .paragraphStyle: pStyle,
         ]
-        self.normalValue = [
+        normalValue = [
             .font: NSFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: NSColor.labelColor,
         ]
-        self.normalLabel = [
+        normalLabel = [
             .font: NSFont.systemFont(ofSize: 13, weight: .regular), .foregroundColor: NSColor.labelColor,
         ]
     }
 
     func drawTitle(_ label: String, x: CGFloat) {
-        NSAttributedString(string: label, attributes: self.normalLabel).draw(at: NSPoint(x: x, y: 2.5))
+        NSAttributedString(string: label, attributes: normalLabel)
+            .draw(at: NSPoint(x: x, y: 2.5))
     }
 
     func drawCompactSingle(_ label: String, _ value: String, x: CGFloat) {
-        NSAttributedString(string: label, attributes: self.compactLabel)
+        NSAttributedString(string: label, attributes: compactLabel)
             .draw(in: NSRect(x: x, y: -4.5, width: 7.2, height: self.frame.height))
-        NSAttributedString(string: value, attributes: self.normalValue).draw(at: NSPoint(x: x + 7.2, y: 2.5))
+        
+        NSAttributedString(string: value, attributes: normalValue)
+            .draw(at: NSPoint(x: x + 7.2, y: 2.5))
+    }
+    
+    func drawIcon(x: CGFloat) {
+        let attach = NSTextAttachment()
+        attach.image = NSImage(named: "asus_rog_red_24p")
+        
+        let str = NSAttributedString(attachment: attach)
+        print(NSStringFromSize(str.size()))
+        str
+            .draw(at: .init(x: x, y: 2.5))
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard (NSGraphicsContext.current?.cgContext) != nil else { return }
-        self.drawTitle("GPU", x: 0.0)
-        if self.gpuCount == 0 {
-            self.drawTitle("NONE", x: 35.0)
+        guard (NSGraphicsContext.current?.cgContext) != nil else {
             return
         }
+        
+        drawIcon(x: .zero)
+        
+        // drawCompactSingle("GPU", "123", x: 0)
+        
+        // drawTitle("GPUuuuuuuuuuuuu", x: 0.0)
+        
+//        if self.gpuCount == 0 {
+//            self.drawTitle("NONииии", x: 35.0)
+//            return
+//        }
+        
+        /*
         for i in 0...(gpuCount - 1) {
             var temp: String
             if i >= self.temps.count || self.temps[i] == 255 {
@@ -62,6 +85,7 @@ private class StatusbarView: NSView {
             }
             self.drawCompactSingle("GP\(i)", temp, x: 35.0 + CGFloat(i) * 45.0)
         }
+        */
     }
 }
 
@@ -75,9 +99,10 @@ class StatusBarController {
     init() {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusItem.isVisible = true
+        self.statusItem.length = 100
 
         self.gpuCount = .zero // RadeonModel.shared.getGpuCount()
-        self.statusItem.length = (self.gpuCount == 0 ? 35.0 * 2.0 : 35.0) + CGFloat(self.gpuCount) * 45.0
+        // self.statusItem.length = (self.gpuCount == 0 ? 35.0 * 2.0 : 35.0) + CGFloat(self.gpuCount) * 45.0
         self.view = StatusbarView()
         self.view.gpuCount = self.gpuCount
         self.view.setup()

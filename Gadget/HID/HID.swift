@@ -18,6 +18,6 @@ import Foundation
     
     @discardableResult
     func initDriver() -> Bool {
-        wrapper.initDriver()
+        wrapper.initDriver() == .zero
     }
 }

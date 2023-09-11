@@ -13,7 +13,7 @@
 @interface HIDWrapper : NSObject
 
 - (instancetype)init;
-- (bool)initDriver;
+- (int)initDriver;
 
 @end
 
