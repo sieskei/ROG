@@ -19,34 +19,25 @@
 
 struct HID_Driver_IVars
 {
-    IOHIDInterface* hid_interface           { nullptr };
-    OSArray* customKeyboardElements         { nullptr };
-    uint8_t kbdLux                          { 0 };
-    bool fixCapsLockLED                     { false };
-    bool bkltAutoTurnOff                    { false };
+    uint8_t lux { 0 };
     
-    HID_UserClient* client { nullptr };
+    IOHIDInterface* hid_interface   { nullptr };
+    OSArray* customKeyboardElements { nullptr };
+    HID_UserClient* client          { nullptr };
 };
-
-#define _hid_interface              ivars->hid_interface
-#define _custom_keyboard_elements   ivars->customKeyboardElements
-#define _current_lux                ivars->kbdLux
 
 bool HID_Driver::init()
 {
     DBGLOG("Init");
 
-    if (!super::init())
+    if (!super::init()) {
         return false;
+    }
 
     ivars = IONewZero(HID_Driver_IVars, 1);
-
-    if (ivars == nullptr)
+    if (ivars == nullptr) {
         return false;
-
-    ivars->fixCapsLockLED = false;
-    ivars->bkltAutoTurnOff = false;
-    _current_lux = 0;
+    }
 
     return true;
 }
@@ -54,6 +45,7 @@ bool HID_Driver::init()
 kern_return_t IMPL(HID_Driver, Start)
 {
     DBGLOG("Start");
+    
     kern_return_t ret;
     ret = Start(provider, SUPERDISPATCH);
 
@@ -70,9 +62,8 @@ kern_return_t IMPL(HID_Driver, Start)
         return kIOReturnError;
     }
 
-    _hid_interface = interface;
-
-    OSArray *elements = _hid_interface->getElements();
+    ivars->hid_interface = interface;
+    OSArray *elements = interface->getElements();
     elements->retain();
     if (elements)
         parseKeyboardElementsHook(elements);
@@ -81,12 +72,9 @@ kern_return_t IMPL(HID_Driver, Start)
     // Now we init the keyboard
     rogNkeyLedInit();
 
-    // Parse Info.plist
-    parseInfoPlist();
-
     // Reflect the intital value on lux
-    DBGLOG("Trying to set initial kbd lux to: 0x%x", _current_lux);
-    setBacklight(_current_lux);
+    DBGLOG("Trying to set initial kbd lux to: 0x%x", ivars->lux);
+    setBacklight(ivars->lux);
 
     // And register ourselves with the system
     DBGLOG("Register service");
@@ -98,7 +86,7 @@ kern_return_t IMPL(HID_Driver, Start)
 void IMPL(HID_Driver, parseKeyboardElementsHook)
 {
     DBGLOG("Parse keyboard element hook called");
-    _custom_keyboard_elements = OSArray::withCapacity(4);
+    ivars->customKeyboardElements = OSArray::withCapacity(4);
     uint32_t count, index;
     for (index = 0, count = elements->getCount(); index < count; index++)
     {
@@ -152,19 +140,19 @@ void IMPL(HID_Driver, parseKeyboardElementsHook)
                 break;
         }
         if (store)
-            _custom_keyboard_elements->setObject(element);
+            ivars->customKeyboardElements->setObject(element);
     }
 }
 
 void HID_Driver::handleKeyboardReport(uint64_t timestamp, uint32_t reportID)
 {
-    for (unsigned int i = 0; i < _custom_keyboard_elements->getCount(); i++)
+    for (unsigned int i = 0; i < ivars->customKeyboardElements->getCount(); i++)
     {
         IOHIDElement* element { nullptr };
         uint64_t elementTimeStamp;
         uint32_t usagePage, usage, value, preValue;
 
-        element = OSDynamicCast(IOHIDElement, _custom_keyboard_elements->getObject(i));
+        element = OSDynamicCast(IOHIDElement, ivars->customKeyboardElements->getObject(i));
 
         if (!element || element->getReportID() != reportID)
             continue;
@@ -178,8 +166,11 @@ void HID_Driver::handleKeyboardReport(uint64_t timestamp, uint32_t reportID)
 
         preValue = element->getValue(kIOHIDValueOptionsFlagPrevious) != 0;
 
-        // Fix for double reports of KBD illumination
-        if (usagePage == kHIDPage_AsusVendor && (usage == kHIDUsage_AsusVendor_IlluminationUp || usage == kHIDUsage_AsusVendor_IlluminationDown))
+        // Fix for double reports of KBD illumination / FAN
+        if (usagePage == kHIDPage_AsusVendor &&
+            (usage == kHIDUsage_AsusVendor_IlluminationUp ||
+             usage == kHIDUsage_AsusVendor_IlluminationDown ||
+             usage == kHIDUsage_AsusVendor_Fan))
         {
             value = element->getValue(kIOHIDValueOptionsFlagRelativeSimple) != 0;
         }
@@ -192,7 +183,13 @@ void HID_Driver::handleKeyboardReport(uint64_t timestamp, uint32_t reportID)
             continue;
 
         DBGLOG("Handle Key Report - usage: 0x%x, page: 0x%x, val: 0x%x", usage, usagePage, value);
+        
         dispatchKeyboardEvent(timestamp, usagePage, usage, value, 0, false);
+        
+        if (ivars->client) {
+            ivars->client->dispatchKeyboardEvent(timestamp, usagePage, usage, value);
+        }
+        
         return;
     }
 
@@ -219,18 +216,6 @@ kern_return_t HID_Driver::dispatchKeyboardEvent(uint64_t timeStamp, uint32_t usa
             case kHIDUsage_AsusVendor_IlluminationUp:
                 setKbdLux(luxUp);
                 break;
-            case kHIDUsage_AsusVendor_Fan:
-                if (ivars->client != nullptr)
-                {
-                    ivars->client->onFanEvent();
-                }
-                break;
-            case kHIDUsage_AsusVendor_Fan2:
-                if (ivars->client != nullptr)
-                {
-                    ivars->client->onFanEvent();
-                }
-                break;
         }
     }
     if (usagePage == kHIDPage_MicrosoftVendor)
@@ -248,7 +233,7 @@ kern_return_t HID_Driver::dispatchKeyboardEvent(uint64_t timeStamp, uint32_t usa
     }
 
     // Fix erratic caps lock key
-    if (usage == kHIDUsage_KeyboardCapsLock && ivars->fixCapsLockLED)
+    if (usage == kHIDUsage_KeyboardCapsLock)
         IOSleep(80);
 
     DBGLOG("Dispatch Event - usage: 0x%x, page: 0x%x, val: 0x%x", usage, usagePage, value);
@@ -259,52 +244,19 @@ void IMPL(HID_Driver, setKbdLux)
 {
     if (luxEvent == luxUp)
     {
-        if (_current_lux == 3)
+        if (ivars->lux == 3)
             return;
-        setBacklight(++_current_lux);
+        setBacklight(++ivars->lux);
         return;
     }
 
     if (luxEvent == luxDown)
     {
-        if (_current_lux == 0)
+        if (ivars->lux == 0)
             return;
-        setBacklight(--_current_lux);
+        setBacklight(--ivars->lux);
         return;
     }
-}
-
-void IMPL(HID_Driver, parseInfoPlist)
-{
-    DBGLOG("Parse custom Info.plist properties");
-    OSContainer* propContainer{nullptr};
-    OSNumber* containerVal{nullptr};
-
-    SearchProperty("FixCapsLockLED", "IOService", kIOServiceSearchPropertyParents, &propContainer);
-    if (!propContainer)
-        goto exit;
-
-    containerVal = OSDynamicCast(OSNumber, propContainer);
-    if (containerVal == nullptr)
-        goto exit;
-
-    ivars->fixCapsLockLED = containerVal->unsigned8BitValue() == kBooleanTrue;
-    DBGLOG("Fix caps lock led: %s", ivars->fixCapsLockLED ? "True" : "False");
-
-    SearchProperty("BacklightAutoTurnOff", "IOService", kIOServiceSearchPropertyParents, &propContainer);
-    if (!propContainer)
-        goto exit;
-
-    containerVal = OSDynamicCast(OSNumber, propContainer);
-    if (containerVal == nullptr)
-        goto exit;
-
-    ivars->bkltAutoTurnOff = containerVal->unsigned8BitValue() == kBooleanTrue;
-    DBGLOG("Backlight auto turn off: %s", ivars->bkltAutoTurnOff ? "True" : "False");
-
-exit:
-    OSSafeReleaseNULL(propContainer);
-    DBGLOG("Done parsing custom Info.plist properties");
 }
 
 kern_return_t IMPL(HID_Driver, Stop)
@@ -318,8 +270,9 @@ void HID_Driver::free()
     DBGLOG("Free");
     if (ivars != nullptr)
     {
-        OSSafeReleaseNULL(_hid_interface);
-        OSSafeReleaseNULL(_custom_keyboard_elements);
+        OSSafeReleaseNULL(ivars->hid_interface);
+        OSSafeReleaseNULL(ivars->customKeyboardElements);
+        OSSafeReleaseNULL(ivars->client);
     }
 
     IOSafeDeleteNULL(ivars, HID_Driver_IVars, 1);
@@ -407,7 +360,7 @@ kern_return_t IMPL(HID_Driver, setReport)
     auto ret = IOBufferMemoryDescriptorUtility::createWithBytes(data->getBytesNoCopy(0, KBD_FEATURE_REPORT_SIZE), data->getLength(), &report);
     if (ret == kIOReturnSuccess)
     {
-        _hid_interface->SetReport(report, kIOHIDReportTypeFeature, id, 0);
+        ivars->hid_interface->SetReport(report, kIOHIDReportTypeFeature, id, 0);
     } else
     {
         OSLOG("Error allocating memory for report");
@@ -435,7 +388,6 @@ kern_return_t IMPL(HID_Driver, NewUserClient) {
     {
         *userClient = hidClient;
         ivars->client = hidClient;
-        ivars->client->retain();
     } else {
         DBGLOG("Dynamic cast failed");
         client->release();
@@ -443,4 +395,9 @@ kern_return_t IMPL(HID_Driver, NewUserClient) {
     }
     
     return kIOReturnSuccess;
+}
+
+void IMPL(HID_Driver, releaseClient) {
+    OSSafeReleaseNULL(ivars->client);
+    ivars->client = nullptr;
 }

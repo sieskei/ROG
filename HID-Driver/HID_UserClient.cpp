@@ -13,13 +13,8 @@
 /// - Tag: HIDUserClient_IVars
 struct HID_UserClient_IVars {
     HID_Driver *driver { nullptr };
-    OSAction* callback { nullptr };
+    OSAction* dispatchKeyboardEvent { nullptr };
 };
-
-typedef struct
-{
-    uint64_t id;
-} DataStruct;
 
 // This struct should ideally be shared across all applications using the driver, as the integer values need to be the same across all programs.
 typedef enum
@@ -42,8 +37,7 @@ const IOUserClientMethodDispatch externalMethodChecks[1] = {
 
 kern_return_t HID_UserClient::StaticRegisterAsyncCallback(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
-    if (target == nullptr)
-    {
+    if (target == nullptr) {
         return kIOReturnError;
     }
 
@@ -55,20 +49,15 @@ kern_return_t HID_UserClient::RegisterAsyncCallback(void* reference, IOUserClien
     DBGLOG("Got new async callback");
 
     /// - Tag: RegisterAsyncCallback_StoreCompletion
-    if (arguments->completion == nullptr)
-    {
+    if (arguments->completion == nullptr) {
         DBGLOG("Got a null completion.");
         return kIOReturnBadArgument;
     }
 
     // Save the completion for later.
     // If not saved, then it might be freed before the asychronous return.
-    ivars->callback = arguments->completion;
-    ivars->callback->retain();
-    
-    uint64_t asyncData[2] = { 1 };
-    asyncData[1] = 5;
-    AsyncCompletion(ivars->callback, kIOReturnSuccess, asyncData, 2);
+    ivars->dispatchKeyboardEvent = arguments->completion;
+    ivars->dispatchKeyboardEvent->retain();
     
     return kIOReturnSuccess;
 }
@@ -79,15 +68,13 @@ bool HID_UserClient::init() {
     bool result = false;
     
     result = super::init();
-    if (result != true)
-    {
+    if (result != true) {
         DBGLOG("init() - super::init failed.");
         return false;
     }
     
     ivars = IONewZero(HID_UserClient_IVars, 1);
-    if (ivars == nullptr)
-    {
+    if (ivars == nullptr) {
         DBGLOG("init() - Failed to allocate memory for ivars.");
         return false;
     }
@@ -99,7 +86,7 @@ void HID_UserClient::free() {
     DBGLOG("Userclient free");
     
     OSSafeReleaseNULL(ivars->driver);
-    OSSafeReleaseNULL(ivars->callback);
+    OSSafeReleaseNULL(ivars->dispatchKeyboardEvent);
     IOSafeDeleteNULL(ivars, HID_UserClient_IVars, 1);
     
     super::free();
@@ -111,8 +98,7 @@ kern_return_t IMPL(HID_UserClient, Start) {
     kern_return_t ret = kIOReturnSuccess;
 
     ret = Start(provider, SUPERDISPATCH);
-    if (ret != kIOReturnSuccess)
-    {
+    if (ret != kIOReturnSuccess) {
         DBGLOG("Start() - super::Start failed with error: 0x%08x.", ret);
         return ret;
     }
@@ -129,6 +115,11 @@ kern_return_t IMPL(HID_UserClient, Start) {
 
 kern_return_t IMPL(HID_UserClient, Stop) {
     DBGLOG("Userclient stop");
+    
+    if (ivars->driver) {
+        ivars->driver->releaseClient();
+    }
+    
     return kIOReturnSuccess;
 }
 
@@ -137,11 +128,9 @@ kern_return_t HID_UserClient::ExternalMethod(uint64_t selector, IOUserClientMeth
     
     // Check to make sure that the call doesn't interfere with the minimum of the un-checked methods, for the sake of this example.
     // Always check to make sure that the selector is not greater than the number of options in the IOUserClientMethodDispatch.
-    if (selector == ExternalMethodType_RegisterAsyncCallback)
-    {
+    if (selector == ExternalMethodType_RegisterAsyncCallback) {
         dispatch = &externalMethodChecks[selector];
-        if (!target)
-        {
+        if (!target) {
             target = this;
         }
 
@@ -152,12 +141,11 @@ kern_return_t HID_UserClient::ExternalMethod(uint64_t selector, IOUserClientMeth
     return kIOReturnSuccess;
 }
 
-void IMPL(HID_UserClient, onFanEvent) {
+void IMPL(HID_UserClient, dispatchKeyboardEvent) {
     DBGLOG("Userclient on fan event");
     
-    if (ivars->callback != nullptr) {
-        uint64_t asyncData[2] = { 1 };
-        asyncData[1] = 5;
-        AsyncCompletion(ivars->callback, kIOReturnSuccess, asyncData, 2);
+    if (ivars->dispatchKeyboardEvent) {
+        uint64_t asyncData[4] = { timeStamp, usagePage, usage, value };
+        AsyncCompletion(ivars->dispatchKeyboardEvent, kIOReturnSuccess, asyncData, 4);
     }
 }

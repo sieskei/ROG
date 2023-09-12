@@ -2,11 +2,7 @@
 
 @interface HIDWrapper ()
 
-@property io_connect_t connect;
-@property (nonatomic, assign) io_async_ref64_t *refrence;
-
 @property (nonatomic, assign) CFRunLoopRef globalRunLoop;
-@property (nonatomic, assign) CFRunLoopSourceRef runLoopSource;
 
 @end
 
@@ -14,36 +10,24 @@
 
 constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
 
+typedef struct
+{
+    uint64_t id;
+} DataStruct;
+
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.connect = IO_OBJECT_NULL;
-        self.refrence = nullptr;
-        self.globalRunLoop = nullptr;
-        self.runLoopSource = nullptr;
+        self.globalRunLoop = CFRunLoopGetCurrent();
     }
     return self;
 }
 
 - (int)initDriver {
-    io_service_t service = IO_OBJECT_NULL;
-    service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceNameMatching("HID_Driver"));
-    if (service == IO_OBJECT_NULL) {
-        printf("Failed to match to device.\n");
-        return EXIT_FAILURE;
-    }
-    
-    io_connect_t connect = IO_OBJECT_NULL;
-    if (IOServiceOpen(service, mach_task_self_, 0, &connect) != KERN_SUCCESS) {
-        return EXIT_FAILURE;
-    }
-    self.connect = connect;
-    
     io_async_ref64_t refrence = { };
-    refrence[kIOAsyncCalloutFuncIndex] = (io_user_reference_t)AsyncCallback;
-    refrence[kIOAsyncCalloutRefconIndex] = (io_user_reference_t)nullptr;
-    self.refrence = &refrence;
-    
+    refrence[kIOAsyncCalloutFuncIndex] = (io_user_reference_t)dispatchKeyboardEvent;
+    refrence[kIOAsyncCalloutRefconIndex] = (io_user_reference_t)self;
+
     IONotificationPortRef notificationPort = IONotificationPortCreate(kIOMainPortDefault);
     if (notificationPort == nullptr) {
         printf("Failed to create notification port for application.\n");
@@ -61,39 +45,48 @@ constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
         printf("Failed to get run loop for application.\n");
         return EXIT_FAILURE;
     }
-    self.runLoopSource = runLoopSource;
-    
-    // Async initialization
-    self.globalRunLoop = CFRunLoopGetCurrent();
-    CFRetain(self.globalRunLoop);
     
     // Establish our notifications in the run loop, so we can get callbacks.
     CFRunLoopAddSource(self.globalRunLoop, runLoopSource, kCFRunLoopDefaultMode);
     
+    io_iterator_t iterator = IO_OBJECT_NULL;
+    io_service_t service = IO_OBJECT_NULL;
     
-    kern_return_t ret = IOConnectCallAsyncStructMethod(connect,
-                                                       MessageType_RegisterAsyncCallback,
-                                                       machNotificationPort,
-                                                       refrence,
-                                                       kIOAsyncCalloutCount,
-                                                       nil,
-                                                       0,
-                                                       nil,
-                                                       nil);
-    if (ret != kIOReturnSuccess) {
-        printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
+    IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceNameMatching("HID_Driver"), &iterator);
+    while ((service = IOIteratorNext(iterator)) != IO_OBJECT_NULL)
+    {
+        io_connect_t connect;
+        if (IOServiceOpen(service, mach_task_self_, 0, &connect) == kIOReturnSuccess) {
+            IOConnectCallAsyncStructMethod(connect,
+                                           MessageType_RegisterAsyncCallback,
+                                           machNotificationPort,
+                                           refrence,
+                                           kIOAsyncCalloutCount,
+                                           nil,
+                                           0,
+                                           nil,
+                                           nil);
+        }
     }
+    IOObjectRelease(iterator);
     
     return EXIT_SUCCESS;
 }
 
-- (void)dealloc {
-    
-}
-
-static void AsyncCallback(void* refcon, IOReturn result, void** args, uint32_t numArgs) {
+void dispatchKeyboardEvent(void* refcon, IOReturn result, void** args, uint32_t numArgs) {
     printf("called ...");
+    uint64_t* arrArgs = (uint64_t*)args;
     
+    uint64_t timeStamp = arrArgs[0];
+    uint32_t usagePage = (uint32_t) arrArgs[1];
+    uint32_t usage = (uint32_t) arrArgs[2];
+    uint32_t value = (uint32_t) arrArgs[3];
+    
+    if (usage == 0xae) { // FAN
+        
+    }
+    
+    printf("[dispatchKeyboardEvent] %llu, %d, %d, %d\n", timeStamp, usagePage, usage, value);
 }
 
 @end

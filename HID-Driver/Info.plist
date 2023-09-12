@@ -22,12 +22,8 @@
 	<dict>
 		<key>0b05_19b6</key>
 		<dict>
-			<key>BacklightAutoTurnOff</key>
-			<integer>1</integer>
 			<key>CFBundleIdentifier</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-			<key>FixCapsLockLED</key>
-			<integer>1</integer>
 			<key>IOClass</key>
 			<string>AppleUserHIDEventService</string>
 			<key>IOKitDebug</key>

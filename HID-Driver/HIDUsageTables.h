@@ -44,8 +44,7 @@ enum {
     kHIDUsage_AsusVendor_MicMute             = 0x7c,
     kHIDUsage_AsusVendor_Camera              = 0x82,
     kHIDUsage_AsusVendor_RFKill              = 0x88,
-    kHIDUsage_AsusVendor_Fan                 = 0x99,
-    kHIDUsage_AsusVendor_Fan2                = 0xae,
+    kHIDUsage_AsusVendor_Fan                 = 0xae,
     kHIDUsage_AsusVendor_Calc                = 0xb5,
     kHIDUsage_AsusVendor_Splendid            = 0xba, /* Fn+C ASUS Splendid */
     kHIDUsage_AsusVendor_IlluminationUp      = 0xc4,

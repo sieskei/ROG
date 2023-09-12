@@ -68,9 +68,9 @@ public:
     virtual kern_return_t NewUserClient(uint32_t type,
                                         IOUserClient** userClient) override;
     
+    virtual void releaseClient();
 private:
     virtual void parseKeyboardElementsHook(OSArray* elements);
-    virtual void parseInfoPlist();
     virtual void setKbdLux(kLuxEvent luxEvent);
     
     // Ported from hid-asus.c

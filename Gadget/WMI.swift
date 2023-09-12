@@ -69,3 +69,7 @@ class WMI {
         if critical { NSApplication.shared.terminate(self) }
     }
 }
+
+class AAAAA: NSObject {
+    
+}
