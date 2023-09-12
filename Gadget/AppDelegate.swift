@@ -9,6 +9,7 @@ import Cocoa
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusBar: StatusBarController?
+    private var updateTimer: Timer?
 
     static var shared: AppDelegate {
         guard let delegate = NSApp.delegate as? AppDelegate else { fatalError("Invalid delegate") }
@@ -19,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
         statusBar = .init()
         
-        HID.shared.initDriver()
+        // HID.shared.initDriver()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }

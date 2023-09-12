@@ -143,65 +143,6 @@ void WMI::setPowerLimits() {
     
     int pl2 = wmi_evaluate_method(ASUS_WMI_METHODID_DEVS, ASUS_WMI_DEVID_PPT_PL2, 125);
     setProperty("WMI [PPT PL2]", pl2);
-
-    /*
-    IOMemoryDescriptor* mmioDescriptor;
-    
-    // Define the physical address and size of the MMIO region
-    mach_vm_address_t physicalAddress = 0xFED159A0;  // Replace with your actual physical address
-    mach_vm_size_t length = sizeof(UInt32); // Size of the MMIO register (usually 4 bytes)
-    IODirection direction = kIODirectionInOut; // Writing to the MMIO register
-
-    // Allocate memory for MMIO
-    mmioDescriptor = IOMemoryDescriptor::withPhysicalAddress(
-        physicalAddress,       // Physical address of MMIO region
-        length,                // Length of MMIO region
-        direction              // Direction (read or write)
-    );
-    
-    if (!mmioDescriptor) {
-        setProperty("MMIO [descriptor]", false);
-        return;
-    }
-    setProperty("MMIO [descriptor]", true);
-    
-    if (mmioDescriptor->prepare() != kIOReturnSuccess) {
-        setProperty("MMIO [descriptor.prepare]", false);
-        mmioDescriptor->release();
-        return;
-    }
-    setProperty("MMIO [descriptor.prepare]", true);
-    
-    
-    // Create a memory map for MMIO
-    IOMemoryMap* mmioMap;
-    mmioMap = mmioDescriptor->map();
-
-    if (!mmioMap) {
-        setProperty("MMIO [descriptor.map]", false);
-        mmioDescriptor->complete();
-        mmioDescriptor->release();
-        return;
-    }
-    setProperty("MMIO [descriptor.map]", true);
-    
-    volatile UInt32* mmioRegisters; // Make the pointer volatile for MMIO
-    // Get a properly typed pointer to the mapped memory
-    mmioRegisters = reinterpret_cast<volatile UInt32*>(mmioMap->getVirtualAddress());
-    
-    UInt32 registerValue = mmioRegisters[0];
-    char mmioRegisters_str[64]; // Make sure the array is large enough to hold the resulting string
-    sprintf(mmioRegisters_str, "%d", registerValue); // Convert int to string
-    setProperty("MMIO [mmioRegisters]", mmioRegisters_str);
-    
-    if (mmioMap) {
-        mmioMap->release();
-    }
-    if (mmioDescriptor) {
-        mmioDescriptor->complete();
-        mmioDescriptor->release();
-    }
-    */
 }
 
 void WMI::setThrottleThermalPolicy() {
@@ -231,6 +172,46 @@ int WMI::toogleThrottleThermalPolicy() {
     
     setThrottleThermalPolicy();
     return tt_policy;
+}
+
+uint WMI::getCPUTemp() {
+    int ret = wmi_get_devstate(ASUS_WMI_DEVID_CPU_TEMP_CTRL);
+    if (ret == -1) {
+        DBGLOG("CPU", "read temp using WMI failed");
+        return 0;
+    } else {
+        return (ret & 0xffff);
+    }
+}
+
+uint WMI::getGPUTemp() {
+    int ret = wmi_get_devstate(ASUS_WMI_DEVID_GPU_TEMP_CTRL);
+    if (ret == -1) {
+        DBGLOG("GPU", "read temp using WMI failed");
+        return 0;
+    } else {
+        return (ret & 0xffff);
+    }
+}
+
+uint WMI::getCPURpm() {
+    int ret = wmi_get_devstate(ASUS_WMI_DEVID_CPU_FAN_CTRL);
+    if (ret == -1) {
+        DBGLOG("CPU", "read speed using WMI failed");
+        return 0;
+    } else {
+        return (ret & 0xffff) * 100;
+    }
+}
+
+uint WMI::getGPURpm() {
+    int ret = wmi_get_devstate(ASUS_WMI_DEVID_GPU_FAN_CTRL);
+    if (ret == -1) {
+        DBGLOG("GPU", "read fan speed using WMI failed");
+        return 0;
+    } else {
+        return (ret & 0xffff) * 100;
+    }
 }
 
 void WMI::registerVSMC() {

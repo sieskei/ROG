@@ -11,39 +11,23 @@ private class StatusbarView: NSView {
     private var compactLabel: [NSAttributedString.Key: NSObject]?
     private var normalValue: [NSAttributedString.Key: NSObject]?
 
-    var gpuCount: Int = 0
-    var temps: [Int] = []
-
     func setup() {
-        let compactLH: CGFloat = 6
-
-        let pStyle = NSMutableParagraphStyle()
-        pStyle.minimumLineHeight = compactLH
-        pStyle.maximumLineHeight = compactLH
-
         compactLabel = [
             .font: NSFont.monospacedSystemFont(ofSize: 7.2, weight: .regular), .foregroundColor: NSColor.labelColor,
-            .paragraphStyle: pStyle,
         ]
         normalValue = [
-            .font: NSFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: NSColor.labelColor,
-        ]
-        normalLabel = [
-            .font: NSFont.systemFont(ofSize: 13, weight: .regular), .foregroundColor: NSColor.labelColor,
+            .font: NSFont.systemFont(ofSize: 11, weight: .regular), .foregroundColor: NSColor.labelColor,
         ]
     }
-
-    func drawTitle(_ label: String, x: CGFloat) {
-        NSAttributedString(string: label, attributes: normalLabel)
-            .draw(at: NSPoint(x: x, y: 2.5))
-    }
-
-    func drawCompactSingle(_ label: String, _ value: String, x: CGFloat) {
+    
+    func drawMultiline(_ label: String, _ value: String, x: CGFloat) {
         NSAttributedString(string: label, attributes: compactLabel)
-            .draw(in: NSRect(x: x, y: -4.5, width: 7.2, height: self.frame.height))
+            .draw(at: NSPoint(x: x, y: 11))
         
-        NSAttributedString(string: value, attributes: normalValue)
-            .draw(at: NSPoint(x: x + 7.2, y: 2.5))
+        let str = NSAttributedString(string: value, attributes: normalValue)
+        print(NSStringFromSize(str.size()))
+        str
+            .draw(at: NSPoint(x: x, y: 0))
     }
     
     func drawIcon(x: CGFloat) {
@@ -61,31 +45,11 @@ private class StatusbarView: NSView {
             return
         }
         
+        let wmi = WMI.shared
+        
         drawIcon(x: .zero)
-        
-        // drawCompactSingle("GPU", "123", x: 0)
-        
-        // drawTitle("GPUuuuuuuuuuuuu", x: 0.0)
-        
-//        if self.gpuCount == 0 {
-//            self.drawTitle("NONииии", x: 35.0)
-//            return
-//        }
-        
-        /*
-        for i in 0...(gpuCount - 1) {
-            var temp: String
-            if i >= self.temps.count || self.temps[i] == 255 {
-                temp = "-  "
-            } else if self.temps[i] > 125 {
-                temp = "INV"
-                NSLog("Invalid temperature for GPU %u: %u", i, self.temps[i])
-            } else {
-                temp = "\(self.temps[i])ºC".padding(toLength: 5, withPad: " ", startingAt: 0)
-            }
-            self.drawCompactSingle("GP\(i)", temp, x: 35.0 + CGFloat(i) * 45.0)
-        }
-        */
+        drawMultiline("CPU", "\(wmi.getCPUTemp())°C (\(wmi.getCPURpm()))", x: 32)
+        drawMultiline("GPU", "\(wmi.getGPUTemp())°C (\(wmi.getCPURpm()))", x: 106)
     }
 }
 
@@ -94,17 +58,13 @@ class StatusBarController {
     private var view: StatusbarView!
     private var popover: NSPopover
     private var updateTimer: Timer?
-    private var gpuCount: Int
 
     init() {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusItem.isVisible = true
-        self.statusItem.length = 100
+        self.statusItem.length = 172
 
-        self.gpuCount = .zero // RadeonModel.shared.getGpuCount()
-        // self.statusItem.length = (self.gpuCount == 0 ? 35.0 * 2.0 : 35.0) + CGFloat(self.gpuCount) * 45.0
         self.view = StatusbarView()
-        self.view.gpuCount = self.gpuCount
         self.view.setup()
 
         self.popover = NSPopover()
@@ -118,13 +78,10 @@ class StatusBarController {
             statusBarButton.target = self
         }
 
-        if self.gpuCount > 0 {
-            self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { _ in self.update() })
-        }
+        self.updateTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { _ in self.update() })
     }
 
     func update() {
-        self.view.temps =  [.zero] // RadeonModel.shared.getTemps(self.gpuCount)
         self.view.setNeedsDisplay(self.view.frame)
     }
 

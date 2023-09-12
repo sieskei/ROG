@@ -10,8 +10,12 @@ import Cocoa
 
 enum WMISelector: UInt32 {
     case getVersionLength = 0
-    case getVersion = 1
-    case toggleThrottleThermalPolicy = 2
+    case getVersion
+    case getCPUTemp
+    case getGPUTemp
+    case getCPURpm
+    case getGPURpm
+    case toggleThrottleThermalPolicy
 }
 
 class WMI {
@@ -39,15 +43,36 @@ class WMI {
         return (Int(version[0]) ?? 0, Int(version[1]) ?? 0)
     }
     
-    @discardableResult
-    func toggleThrottleThermalPolicy() -> Int {
+    private func getScalar(selector: WMISelector) -> UInt {
         var scalarOut: UInt64 = 0
         var outputCount: UInt32 = 1
-
-        _ = IOConnectCallMethod(
-            connect, WMISelector.toggleThrottleThermalPolicy.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
-        
-        return Int(scalarOut)
+        _ = IOConnectCallMethod(connect, selector.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
+        return UInt(scalarOut)
+    }
+    
+    func getCPUTemp() -> UInt {
+        getScalar(selector: .getCPUTemp)
+    }
+    
+    func getGPUTemp() -> UInt {
+        getScalar(selector: .getGPUTemp)
+    }
+    
+    func getCPURpm() -> UInt {
+        getScalar(selector: .getCPURpm)
+    }
+    
+    func getGPURpm() -> UInt {
+        getScalar(selector: .getGPURpm)
+    }
+    
+    @discardableResult
+    func toggleThrottleThermalPolicy() -> UInt {
+        getScalar(selector: .toggleThrottleThermalPolicy)
+    }
+    
+    func close() {
+        connect = 0
     }
 
     private func initDriver() -> Bool {
@@ -68,8 +93,4 @@ class WMI {
         }
         if critical { NSApplication.shared.terminate(self) }
     }
-}
-
-class AAAAA: NSObject {
-    
 }

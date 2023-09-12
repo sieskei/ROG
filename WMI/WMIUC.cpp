@@ -25,7 +25,7 @@ bool WMIUserClient::initWithTask(task_t owningTask, void *securityToken, UInt32 
     this->owningTask = owningTask;
     this->wmi = nullptr;
     
-    setProperty("UC [initWithTask]", true);
+    setProperty("WMIUC [initWithTask]", true);
 
     return true;
 }
@@ -42,7 +42,7 @@ bool WMIUserClient::start(IOService *provider) {
         return false;
     }
 
-    setProperty("UC [start]", true);
+    setProperty("WMIUC [start]", true);
     
     return true;
 }
@@ -50,6 +50,8 @@ bool WMIUserClient::start(IOService *provider) {
 void WMIUserClient::stop(IOService *provider) {
     this->wmi = nullptr;
     super::stop(provider);
+    
+    setProperty("WMIUC [stop]", true);
 }
 
 IOReturn WMIUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments *arguments,
@@ -66,6 +68,30 @@ IOReturn WMIUserClient::externalMethod(uint32_t selector, IOExternalMethodArgume
             arguments->scalarOutputCount = 0;
             arguments->structureOutputSize = sizeof(version);
             memcpy(arguments->structureOutput, version, sizeof(version));
+            break;
+        }
+        case WMISelector::GetCPUTemp: {
+            arguments->scalarOutputCount = 1;
+            *arguments->scalarOutput = wmi->getCPUTemp();
+            arguments->structureOutputSize = 0;
+            break;
+        }
+        case WMISelector::GetGPUTemp: {
+            arguments->scalarOutputCount = 1;
+            *arguments->scalarOutput = wmi->getGPUTemp();
+            arguments->structureOutputSize = 0;
+            break;
+        }
+        case WMISelector::GetCPURpm: {
+            arguments->scalarOutputCount = 1;
+            *arguments->scalarOutput = wmi->getCPURpm();
+            arguments->structureOutputSize = 0;
+            break;
+        }
+        case WMISelector::GetGPURpm: {
+            arguments->scalarOutputCount = 1;
+            *arguments->scalarOutput = wmi->getGPURpm();
+            arguments->structureOutputSize = 0;
             break;
         }
         case WMISelector::ToggleThrottleThermalPolicy: {

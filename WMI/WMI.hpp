@@ -30,6 +30,13 @@
 #define ASUS_WMI_DEVID_PPT_PL1 0x001200A0 // PL1
 #define ASUS_WMI_DEVID_PPT_PL2 0x001200A3 // PL2
 
+#define ASUS_WMI_DEVID_CPU_FAN_CTRL 0x00110013
+#define ASUS_WMI_DEVID_GPU_FAN_CTRL 0x00110014
+
+#define ASUS_WMI_DEVID_CPU_TEMP_CTRL 0x00120094
+#define ASUS_WMI_DEVID_GPU_TEMP_CTRL 0x00120097
+
+
 class WMI : public IOService {
     OSDeclareDefaultStructors(WMI)
     
@@ -102,6 +109,10 @@ private:
     
 public:
     int toogleThrottleThermalPolicy();
+    uint getCPUTemp();
+    uint getGPUTemp();
+    uint getCPURpm();
+    uint getGPURpm();
 };
 
 #endif /* WMI_hpp */
