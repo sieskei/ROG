@@ -111,7 +111,7 @@ struct PopupView: View {
             }
             Spacer().frame(height: 16)
             Button(action: {
-                WMI1.shared.toggleThrottleThermalPolicy()
+                WMI.shared().toggleThrottleThermalPolicy()
             }) {
                 HStack {
                     Image("fan")

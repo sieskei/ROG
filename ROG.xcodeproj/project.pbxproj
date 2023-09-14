@@ -16,7 +16,6 @@
 		7122ED2E2AA8DCCE00B7F38D /* HID_UserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2C2AA8DCCE00B7F38D /* HID_UserClient.cpp */; };
 		7122ED2F2AA8DCCE00B7F38D /* HID_UserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */; };
 		7167F2ED2AABC2D600E911DB /* HID.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7167F2EC2AABC2D600E911DB /* HID.mm */; };
-		7167F2F02AABC3E000E911DB /* HID1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167F2EF2AABC3E000E911DB /* HID1.swift */; };
 		7171A17B2AA908DD000AA425 /* HID_InstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */; };
 		7171A17D2AA908DD000AA425 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A17C2AA908DD000AA425 /* ContentView.swift */; };
 		7171A17F2AA908DE000AA425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7171A17E2AA908DE000AA425 /* Assets.xcassets */; };
@@ -35,7 +34,6 @@
 		71E93B042AA9176C003DBB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E93B032AA9176C003DBB97 /* Assets.xcassets */; };
 		71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B0C2AA91B2C003DBB97 /* main.swift */; };
 		71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */; };
-		71E93B112AA91F59003DBB97 /* WMI1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E93B102AA91F59003DBB97 /* WMI1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +74,6 @@
 		7122ED2D2AA8DCCE00B7F38D /* HID_UserClient.iig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.iig; path = HID_UserClient.iig; sourceTree = "<group>"; };
 		7167F2EC2AABC2D600E911DB /* HID.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HID.mm; sourceTree = "<group>"; };
 		7167F2EE2AABC2EE00E911DB /* HID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HID.h; sourceTree = "<group>"; };
-		7167F2EF2AABC3E000E911DB /* HID1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID1.swift; sourceTree = "<group>"; };
 		7167F2F12AABC49B00E911DB /* Gadget-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gadget-Bridging-Header.h"; sourceTree = "<group>"; };
 		7171A1782AA908DD000AA425 /* HID-Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HID-Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7171A17A2AA908DD000AA425 /* HID_InstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HID_InstallerApp.swift; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		71E93B082AA9176C003DBB97 /* Gadget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gadget.entitlements; sourceTree = "<group>"; };
 		71E93B0C2AA91B2C003DBB97 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		71E93B0E2AA91B94003DBB97 /* StatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
-		71E93B102AA91F59003DBB97 /* WMI1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMI1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +177,6 @@
 			children = (
 				7167F2EE2AABC2EE00E911DB /* HID.h */,
 				7167F2EC2AABC2D600E911DB /* HID.mm */,
-				7167F2EF2AABC3E000E911DB /* HID1.swift */,
 			);
 			path = HID;
 			sourceTree = "<group>";
@@ -191,7 +186,6 @@
 			children = (
 				71A0F0FE2AB23E8C0042A566 /* WMI.h */,
 				71A0F0FC2AB23E760042A566 /* WMI.mm */,
-				71E93B102AA91F59003DBB97 /* WMI1.swift */,
 			);
 			path = WMI;
 			sourceTree = "<group>";
@@ -474,8 +468,6 @@
 				71E93B0F2AA91B94003DBB97 /* StatusBarController.swift in Sources */,
 				71E93B002AA9176B003DBB97 /* AppDelegate.swift in Sources */,
 				7167F2ED2AABC2D600E911DB /* HID.mm in Sources */,
-				7167F2F02AABC3E000E911DB /* HID1.swift in Sources */,
-				71E93B112AA91F59003DBB97 /* WMI1.swift in Sources */,
 				71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */,
 				71A0F0FD2AB23E760042A566 /* WMI.mm in Sources */,
 			);
