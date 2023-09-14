@@ -8,7 +8,7 @@
 
 import Cocoa
 
-enum WMISelector: UInt32 {
+enum WMISelector1: UInt32 {
     case getVersionLength = 0
     case getVersion
     case getCPUTemp
@@ -18,8 +18,8 @@ enum WMISelector: UInt32 {
     case toggleThrottleThermalPolicy
 }
 
-class WMI {
-    static let shared: WMI = .init()
+class WMI1 {
+    static let shared: WMI1 = .init()
     private var connect: io_connect_t = 0
     
     init() {
@@ -31,19 +31,19 @@ class WMI {
         var scalarOut: UInt64 = 0
         var outputCount: UInt32 = 1
         _ = IOConnectCallMethod(
-            connect, WMISelector.getVersionLength.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
+            connect, WMISelector1.getVersionLength.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)
 
         var outputStrCount: Int = Int(scalarOut)
         var outputStr: [CChar] = [CChar](repeating: 0, count: outputStrCount)
         _ = IOConnectCallMethod(
-            connect, WMISelector.getVersion.rawValue, nil, 0, nil, 0, nil, nil, &outputStr, &outputStrCount)
+            connect, WMISelector1.getVersion.rawValue, nil, 0, nil, 0, nil, nil, &outputStr, &outputStrCount)
 
         let version = String(cString: Array(outputStr[0...outputStrCount - 1])).components(separatedBy: ".")
         if version.count <= 1 { self.alert("Invalid kext version", critical: true) }
         return (Int(version[0]) ?? 0, Int(version[1]) ?? 0)
     }
     
-    private func getScalar(selector: WMISelector) -> UInt {
+    private func getScalar(selector: WMISelector1) -> UInt {
         var scalarOut: UInt64 = 0
         var outputCount: UInt32 = 1
         _ = IOConnectCallMethod(connect, selector.rawValue, nil, 0, nil, 0, &scalarOut, &outputCount, nil, nil)

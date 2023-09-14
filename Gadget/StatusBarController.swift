@@ -41,11 +41,10 @@ private class StatusbarView: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard (NSGraphicsContext.current?.cgContext) != nil else {
+        guard (NSGraphicsContext.current?.cgContext) != nil,
+              let wmi = WMI.shared() else {
             return
         }
-        
-        let wmi = WMI.shared
         
         drawIcon(x: .zero)
         drawMultiline("CPU", "\(wmi.getCPUTemp())°C (\(wmi.getCPURpm()))", x: 32)
@@ -112,7 +111,7 @@ struct PopupView: View {
             }
             Spacer().frame(height: 16)
             Button(action: {
-                WMI.shared.toggleThrottleThermalPolicy()
+                WMI1.shared.toggleThrottleThermalPolicy()
             }) {
                 HStack {
                     Image("fan")

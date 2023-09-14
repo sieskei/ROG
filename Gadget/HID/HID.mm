@@ -1,24 +1,30 @@
-#import "HIDWrapper.h"
+#import "HID.h"
+#import "WMI.h"
 
-@interface HIDWrapper ()
+@interface HID ()
 
 @property (nonatomic, assign) CFRunLoopRef globalRunLoop;
 
 @end
 
-@implementation HIDWrapper
+@implementation HID
 
 constexpr uint32_t MessageType_RegisterAsyncCallback = 0;
 
-typedef struct
-{
-    uint64_t id;
-} DataStruct;
++ (instancetype)shared {
+    static HID *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    return instance;
+}
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         self.globalRunLoop = CFRunLoopGetCurrent();
+        [self initDriver];
     }
     return self;
 }
@@ -82,11 +88,11 @@ void dispatchKeyboardEvent(void* refcon, IOReturn result, void** args, uint32_t 
     uint32_t usage = (uint32_t) arrArgs[2];
     uint32_t value = (uint32_t) arrArgs[3];
     
-    if (usage == 0xae) { // FAN
-        
-    }
-    
     printf("[dispatchKeyboardEvent] %llu, %d, %d, %d\n", timeStamp, usagePage, usage, value);
+    
+    if (usage == 0xae) { // FAN
+        [WMI.shared toggleThrottleThermalPolicy];
+    }
 }
 
 @end

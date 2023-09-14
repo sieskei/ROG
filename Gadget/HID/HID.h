@@ -5,16 +5,18 @@
 //  Created by Miroslav Yozov on 9.09.23.
 //
 
-#ifndef MyWrapper_h
-#define MyWrapper_h
+#ifndef HID_h
+#define HID_h
 
 #import <Foundation/Foundation.h>
 
-@interface HIDWrapper : NSObject
+@interface HID : NSObject
+
++ (instancetype)shared;
 
 - (instancetype)init;
 - (int)initDriver;
 
 @end
 
-#endif /* MyWrapper_h */
+#endif /* HID_h */

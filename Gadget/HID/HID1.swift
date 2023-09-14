@@ -7,10 +7,10 @@
 
 import Foundation
 
-@objc class HID: NSObject {
-    static let shared: HID = .init()
+@objc class HID1: NSObject {
+    static let shared: HID1 = .init()
     
-    private let wrapper: HIDWrapper = .init()
+    private let wrapper: HID = .init()
     
     private override init() {
         super.init()
