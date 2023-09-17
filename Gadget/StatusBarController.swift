@@ -25,7 +25,7 @@ private class StatusbarView: NSView {
             .draw(at: NSPoint(x: x, y: 11))
         
         let str = NSAttributedString(string: value, attributes: normalValue)
-        print(NSStringFromSize(str.size()))
+        // print(NSStringFromSize(str.size()))
         str
             .draw(at: NSPoint(x: x, y: 0))
     }
@@ -35,7 +35,7 @@ private class StatusbarView: NSView {
         attach.image = NSImage(named: "asus_rog_red_24p")
         
         let str = NSAttributedString(attachment: attach)
-        print(NSStringFromSize(str.size()))
+        // print(NSStringFromSize(str.size()))
         str
             .draw(at: .init(x: x, y: 2.5))
     }

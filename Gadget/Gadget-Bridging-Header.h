@@ -7,3 +7,4 @@
 
 #import "HID/HID.h"
 #import "WMI/WMI.h"
+#import "MMIOTools.h"

@@ -36,7 +36,7 @@
     return EXIT_FAILURE;
 }
 
-- (uint)getScalar:(WMISelector)selector {
+- (int)getScalar:(WMISelector)selector {
     uint64 scalarOut = 0;
     uint32 outputCount = 1;
     IOConnectCallScalarMethod(self.connect, selector, nil, 0, &scalarOut, &outputCount);
@@ -59,7 +59,11 @@
     return [self getScalar:getGPURpm];
 }
 
-- (uint)toggleThrottleThermalPolicy {
+- (int)getThrottleThermalPolicy {
+    return [self getScalar:toggleThrottleThermalPolicy];
+}
+
+- (int)toggleThrottleThermalPolicy {
     return [self getScalar:toggleThrottleThermalPolicy];
 }
 

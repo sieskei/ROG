@@ -22,6 +22,7 @@ struct WMISelector {
         GetGPUTemp,
         GetCPURpm,
         GetGPURpm,
+        GetThrottleThermalPolicy,
         ToggleThrottleThermalPolicy,
     };
 };

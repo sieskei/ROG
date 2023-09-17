@@ -157,23 +157,6 @@ void WMI::setThrottleThermalPolicy() {
     setProperty("WMI [TTP result]", ttp);
 }
 
-int WMI::toogleThrottleThermalPolicy() {
-    switch (tt_policy) {
-        case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
-            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST;
-            break;
-        case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST:
-            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_SILENT;
-            break;
-        case ASUS_THROTTLE_THERMAL_POLICY_SILENT:
-            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_DEFAULT;
-            break;
-    }
-    
-    setThrottleThermalPolicy();
-    return tt_policy;
-}
-
 uint WMI::getCPUTemp() {
     int ret = wmi_get_devstate(ASUS_WMI_DEVID_CPU_TEMP_CTRL);
     if (ret == -1) {
@@ -212,6 +195,33 @@ uint WMI::getGPURpm() {
     } else {
         return (ret & 0xffff) * 100;
     }
+}
+
+int WMI::getThrottleThermalPolicy() {
+    int ret = wmi_get_devstate(ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY);
+    if (ret == -1) {
+        DBGLOG("CPU", "read temp using WMI failed");
+        return 0;
+    } else {
+        return (ret & 0xffff);
+    }
+}
+
+int WMI::toogleThrottleThermalPolicy() {
+    switch (tt_policy) {
+        case ASUS_THROTTLE_THERMAL_POLICY_DEFAULT:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST;
+            break;
+        case ASUS_THROTTLE_THERMAL_POLICY_OVERBOOST:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_SILENT;
+            break;
+        case ASUS_THROTTLE_THERMAL_POLICY_SILENT:
+            tt_policy = ASUS_THROTTLE_THERMAL_POLICY_DEFAULT;
+            break;
+    }
+    
+    setThrottleThermalPolicy();
+    return tt_policy;
 }
 
 void WMI::registerVSMC() {

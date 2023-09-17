@@ -17,6 +17,7 @@ typedef enum {
     getGPUTemp,
     getCPURpm,
     getGPURpm,
+    getThrottleThermalPolicy,
     toggleThrottleThermalPolicy
 } WMISelector;
 
@@ -33,7 +34,8 @@ typedef enum {
 - (uint)getGPUTemp;
 - (uint)getCPURpm;
 - (uint)getGPURpm;
-- (uint)toggleThrottleThermalPolicy;
+- (int)getThrottleThermalPolicy;
+- (int)toggleThrottleThermalPolicy;
 
 @end
 

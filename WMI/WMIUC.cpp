@@ -94,6 +94,12 @@ IOReturn WMIUserClient::externalMethod(uint32_t selector, IOExternalMethodArgume
             arguments->structureOutputSize = 0;
             break;
         }
+        case WMISelector::GetThrottleThermalPolicy: {
+            arguments->scalarOutputCount = 1;
+            *arguments->scalarOutput = wmi->getThrottleThermalPolicy();
+            arguments->structureOutputSize = 0;
+            break;
+        }
         case WMISelector::ToggleThrottleThermalPolicy: {
             arguments->scalarOutputCount = 1;
             *arguments->scalarOutput = wmi->toogleThrottleThermalPolicy();

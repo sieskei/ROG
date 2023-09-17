@@ -108,11 +108,12 @@ private:
     static bool vsmcNotificationHandler(void *sensors, void *refCon, IOService *vsmc, IONotifier *notifier);
     
 public:
-    int toogleThrottleThermalPolicy();
     uint getCPUTemp();
     uint getGPUTemp();
     uint getCPURpm();
     uint getGPURpm();
+    int getThrottleThermalPolicy();
+    int toogleThrottleThermalPolicy();
 };
 
 #endif /* WMI_hpp */

@@ -22,6 +22,7 @@
 		7171A1822AA908DE000AA425 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7171A1812AA908DE000AA425 /* Preview Assets.xcassets */; };
 		7171A1872AA9090C000AA425 /* com.sieskei.ROG-HID-Driver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 7122ED172AA8D6F600B7F38D /* com.sieskei.ROG-HID-Driver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7171A18C2AA90975000AA425 /* ExtensionManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171A18B2AA90975000AA425 /* ExtensionManger.swift */; };
+		71731EEA2AB3908F00BBDA04 /* MMIOTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 71731EE92AB3908F00BBDA04 /* MMIOTools.m */; };
 		71A0F0FD2AB23E760042A566 /* WMI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71A0F0FC2AB23E760042A566 /* WMI.mm */; };
 		71BEABBC2AA8C686002F34CB /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71BEABBB2AA8C67C002F34CB /* libkmod.a */; };
 		71BEABBF2AA8CEF8002F34CB /* WMI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71BEABBD2AA8CEF8002F34CB /* WMI.cpp */; };
@@ -82,6 +83,8 @@
 		7171A1812AA908DE000AA425 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7171A1832AA908DE000AA425 /* HID_Installer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HID_Installer.entitlements; sourceTree = "<group>"; };
 		7171A18B2AA90975000AA425 /* ExtensionManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionManger.swift; sourceTree = "<group>"; };
+		71731EE92AB3908F00BBDA04 /* MMIOTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMIOTools.m; sourceTree = "<group>"; };
+		71731EEB2AB392D500BBDA04 /* MMIOTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMIOTools.h; sourceTree = "<group>"; };
 		71A0F0FC2AB23E760042A566 /* WMI.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WMI.mm; sourceTree = "<group>"; };
 		71A0F0FE2AB23E8C0042A566 /* WMI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMI.h; sourceTree = "<group>"; };
 		71BEABB22AA8C268002F34CB /* WMI.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMI.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +251,8 @@
 				7167F2F12AABC49B00E911DB /* Gadget-Bridging-Header.h */,
 				71E93B082AA9176C003DBB97 /* Gadget.entitlements */,
 				71E93B032AA9176C003DBB97 /* Assets.xcassets */,
+				71731EEB2AB392D500BBDA04 /* MMIOTools.h */,
+				71731EE92AB3908F00BBDA04 /* MMIOTools.m */,
 			);
 			path = Gadget;
 			sourceTree = "<group>";
@@ -470,6 +475,7 @@
 				7167F2ED2AABC2D600E911DB /* HID.mm in Sources */,
 				71E93B0D2AA91B2C003DBB97 /* main.swift in Sources */,
 				71A0F0FD2AB23E760042A566 /* WMI.mm in Sources */,
+				71731EEA2AB3908F00BBDA04 /* MMIOTools.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

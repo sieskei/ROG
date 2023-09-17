@@ -18,9 +18,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(NSApplication.ActivationPolicy.accessory)
-        statusBar = .init()
+         statusBar = .init()
+         let _ = HID.shared()
         
-        let _ = HID.shared()
+        // MMIOTools.test()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) { }
